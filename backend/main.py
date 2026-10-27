@@ -77,35 +77,22 @@ def submit_answer(exercise_id: int, submission: AnswerSubmit, db: Session = Depe
 
     domain = data_manager.get_domain_by_id(db, exercise.domain_id)
 
-    # 1. Check the answer.
-    # fill_blank has one right word, so plain code decides (fast, free, can't be wrong).
-    # Open-ended types can be correct in many ways, so the AI decides.
-    if exercise.type == "fill_blank":
-        known_is_correct = normalize_answer(submission.user_answer) == \
-            normalize_answer(exercise.correct_answer)
-    else:
-        known_is_correct = None
+    # 1. Check the answer: plain code decides (fast, free, can't be wrong)
+    is_correct = normalize_answer(submission.user_answer) == \
+        normalize_answer(exercise.correct_answer)
 
-    # 2. Ask the AI for feedback (and a verdict, for open-ended types)
+    # 2. Ask the AI to explain the result
     try:
-        evaluation = ai_service.evaluate_answer(
+        ai_feedback = ai_service.evaluate_answer(
             system_prompt=domain.system_prompt,
             exercise_prompt=exercise.prompt,
             correct_answer=exercise.correct_answer,
             user_answer=submission.user_answer,
-            known_is_correct=known_is_correct
+            is_correct=is_correct
         )
-        ai_feedback = evaluation["feedback"]
-        is_correct = known_is_correct if known_is_correct is not None \
-            else evaluation["is_correct"]
     except Exception as e:  # OpenAI down, bad JSON, etc.
         print(f"AI evaluation failed: {e}")
-        if known_is_correct is None:
-            # open-ended answers can't be graded without the AI
-            raise HTTPException(
-                status_code=502, detail="AI evaluation failed, try again")
-        # fill_blank is already graded, so carry on without feedback
-        is_correct = known_is_correct
+        # the answer is already graded, so carry on without feedback
         ai_feedback = None
 
     # 3. Save the attempt
