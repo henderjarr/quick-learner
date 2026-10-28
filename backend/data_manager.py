@@ -1,6 +1,6 @@
 # backend/data_manager.py
 from sqlalchemy.orm import Session
-from sqlalchemy import and_
+from sqlalchemy import and_, func, select
 from datetime import datetime, timezone, timedelta
 from models import (
     Domain, VocabularyItem, GrammarRule, Exercise,
@@ -163,6 +163,34 @@ def get_or_create_srs_card(db: Session, user_id: int, vocabulary_item_id: int):
         db.refresh(card)
 
     return card
+
+
+def introduce_new_words(db: Session, user_id: int, domain_id: int, limit: int = 5):
+    """
+    Starts the user on the next words they haven't seen yet, by creating SRS cards (due now).
+    Order: lowest CEFR level first, then teach_order tier, then random within a tier
+    so topics get mixed instead of drilled one at a time.
+    """
+    # ids of words this user already has a card for
+    started_ids = select(SrsCard.vocabulary_item_id).where(
+        SrsCard.user_id == user_id)
+
+    new_items = db.query(VocabularyItem).filter(
+        and_(
+            VocabularyItem.domain_id == domain_id,
+            VocabularyItem.id.not_in(started_ids)
+        )
+    ).order_by(
+        VocabularyItem.cefr_level,
+        VocabularyItem.teach_order,
+        func.random()
+    ).limit(limit).all()
+
+    for item in new_items:
+        db.add(SrsCard(user_id=user_id, vocabulary_item_id=item.id))
+    db.commit()
+
+    return new_items
 
 
 def update_srs_card(db: Session, card: SrsCard, is_correct: bool):
