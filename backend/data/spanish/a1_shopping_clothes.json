@@ -1,0 +1,49 @@
+{
+  "cefr_level": "A1",
+  "topic": "shopping_clothes",
+  "items": [
+    {"teach_order": 1, "term": "tienda", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "shop", "example_sentence": "Hay muchas tiendas en el centro."},
+    {"teach_order": 1, "term": "supermercado", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "supermarket", "example_sentence": "Compro la comida en el supermercado."},
+    {"teach_order": 2, "term": "mercado", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "market", "example_sentence": "El mercado abre los sábados."},
+    {"teach_order": 3, "term": "panadería", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "bakery", "example_sentence": "La panadería está en la esquina."},
+    {"teach_order": 1, "term": "dinero", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "money", "example_sentence": "No tengo dinero."},
+    {"teach_order": 1, "term": "euro", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "euro", "example_sentence": "Un café cuesta un euro y medio."},
+    {"teach_order": 2, "term": "precio", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "price", "example_sentence": "¿Cuál es el precio?"},
+    {"teach_order": 2, "term": "tarjeta", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "card (bank card)", "example_sentence": "Pago con tarjeta."},
+    {"teach_order": 3, "term": "efectivo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "cash", "usage_note": "en efectivo = in cash", "example_sentence": "¿Puedo pagar en efectivo?"},
+    {"teach_order": 3, "term": "rebajas", "article": "las", "gender": "f", "part_of_speech": "noun", "definition": "sales (discounts)", "example_sentence": "En enero hay rebajas."},
+    {"teach_order": 3, "term": "talla", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "size (clothes)", "example_sentence": "¿Tiene una talla más grande?"},
+
+    {"teach_order": 1, "term": "caro", "feminine_form": "cara", "part_of_speech": "adjective", "definition": "expensive", "example_sentence": "Este restaurante es muy caro."},
+    {"teach_order": 1, "term": "barato", "feminine_form": "barata", "part_of_speech": "adjective", "definition": "cheap", "example_sentence": "La fruta es barata en el mercado."},
+
+    {"teach_order": 1, "term": "ropa", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "clothes", "usage_note": "singular in Spanish: la ropa es...", "example_sentence": "Compro ropa en las rebajas."},
+    {"teach_order": 2, "term": "camisa", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "shirt", "example_sentence": "Llevo una camisa blanca."},
+    {"teach_order": 2, "term": "camiseta", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "T-shirt", "example_sentence": "Esta camiseta es de algodón."},
+    {"teach_order": 2, "term": "pantalones", "article": "los", "gender": "m", "part_of_speech": "noun", "definition": "trousers", "example_sentence": "Necesito unos pantalones negros."},
+    {"teach_order": 3, "term": "vaqueros", "article": "los", "gender": "m", "part_of_speech": "noun", "definition": "jeans", "example_sentence": "Siempre llevo vaqueros."},
+    {"teach_order": 3, "term": "falda", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "skirt", "example_sentence": "La falda es muy bonita."},
+    {"teach_order": 2, "term": "vestido", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "dress", "example_sentence": "Me gusta tu vestido."},
+    {"teach_order": 2, "term": "zapatos", "article": "los", "gender": "m", "part_of_speech": "noun", "definition": "shoes", "example_sentence": "Busco zapatos para correr."},
+    {"teach_order": 3, "term": "zapatillas", "article": "las", "gender": "f", "part_of_speech": "noun", "definition": "trainers / slippers", "example_sentence": "Llevo zapatillas para hacer deporte."},
+    {"teach_order": 2, "term": "chaqueta", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "jacket", "example_sentence": "Esta chaqueta es muy cara."},
+    {"teach_order": 2, "term": "abrigo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "coat", "example_sentence": "En invierno llevo abrigo."},
+    {"teach_order": 3, "term": "jersey", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "jumper / sweater", "example_sentence": "Este jersey es de lana."},
+    {"teach_order": 3, "term": "bolso", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "handbag", "example_sentence": "Mi bolso es negro."},
+    {"teach_order": 2, "term": "gafas", "article": "las", "gender": "f", "part_of_speech": "noun", "definition": "glasses", "example_sentence": "No veo bien sin gafas."},
+
+    {"teach_order": 2, "term": "color", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "colour", "example_sentence": "¿De qué color es?"},
+    {"teach_order": 1, "term": "rojo", "feminine_form": "roja", "part_of_speech": "adjective", "definition": "red", "example_sentence": "Mi coche es rojo."},
+    {"teach_order": 1, "term": "azul", "part_of_speech": "adjective", "definition": "blue", "example_sentence": "El mar es azul."},
+    {"teach_order": 1, "term": "negro", "feminine_form": "negra", "part_of_speech": "adjective", "definition": "black", "example_sentence": "Siempre visto de negro."},
+    {"teach_order": 1, "term": "blanco", "feminine_form": "blanca", "part_of_speech": "adjective", "definition": "white", "example_sentence": "La casa es blanca."},
+    {"teach_order": 2, "term": "amarillo", "feminine_form": "amarilla", "part_of_speech": "adjective", "definition": "yellow", "example_sentence": "El plátano es amarillo."},
+    {"teach_order": 2, "term": "verde", "part_of_speech": "adjective", "definition": "green", "example_sentence": "Me gustan los ojos verdes."},
+    {"teach_order": 2, "term": "gris", "part_of_speech": "adjective", "definition": "grey", "example_sentence": "El cielo está gris."},
+    {"teach_order": 2, "term": "marrón", "part_of_speech": "adjective", "definition": "brown", "example_sentence": "Tengo un perro marrón."},
+    {"teach_order": 3, "term": "rosa", "part_of_speech": "adjective", "definition": "pink", "example_sentence": "Mi hija lleva un vestido rosa."},
+
+    {"teach_order": 3, "term": "probarse", "part_of_speech": "verb", "conjugation_type": "stem_change_o_ue", "definition": "to try on (clothes)", "example_sentence": "¿Puedo probarme estos pantalones?"},
+    {"teach_order": 3, "term": "ir de compras", "item_type": "phrase", "definition": "to go shopping", "example_sentence": "Los sábados voy de compras."}
+  ]
+}

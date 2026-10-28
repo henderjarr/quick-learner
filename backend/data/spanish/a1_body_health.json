@@ -1,0 +1,37 @@
+{
+  "cefr_level": "A1",
+  "topic": "body_health",
+  "items": [
+    {"teach_order": 3, "term": "cuerpo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "body", "example_sentence": "El cuerpo necesita agua."},
+    {"teach_order": 1, "term": "cabeza", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "head", "example_sentence": "Tengo dolor de cabeza."},
+    {"teach_order": 2, "term": "ojo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "eye", "example_sentence": "Tiene los ojos azules."},
+    {"teach_order": 2, "term": "pelo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "hair", "example_sentence": "Tengo el pelo largo."},
+    {"teach_order": 2, "term": "boca", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "mouth", "example_sentence": "Me duele la boca."},
+    {"teach_order": 3, "term": "nariz", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "nose", "example_sentence": "Tengo la nariz roja."},
+    {"teach_order": 3, "term": "oreja", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "ear", "example_sentence": "Me duelen las orejas por el frío."},
+    {"teach_order": 3, "term": "diente", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "tooth", "example_sentence": "Me lavo los dientes tres veces al día."},
+    {"teach_order": 1, "term": "mano", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "hand", "usage_note": "feminine even though it ends in -o", "example_sentence": "Tengo las manos frías."},
+    {"teach_order": 3, "term": "brazo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "arm", "example_sentence": "Me duele el brazo."},
+    {"teach_order": 2, "term": "pierna", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "leg", "example_sentence": "Tengo las piernas cansadas."},
+    {"teach_order": 2, "term": "pie", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "foot", "usage_note": "a pie = on foot", "example_sentence": "Voy a pie al trabajo."},
+    {"teach_order": 2, "term": "espalda", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "back (of the body)", "example_sentence": "Me duele la espalda."},
+    {"teach_order": 3, "term": "estómago", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "stomach", "example_sentence": "Me duele el estómago."},
+    {"teach_order": 3, "term": "dedo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "finger / toe", "example_sentence": "Llevo un anillo en el dedo."},
+    {"teach_order": 2, "term": "cara", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "face", "example_sentence": "Tiene una cara muy simpática."},
+
+    {"teach_order": 1, "term": "médico", "article": "el", "gender": "m", "feminine_form": "médica", "part_of_speech": "noun", "definition": "doctor", "example_sentence": "Hoy voy al médico."},
+    {"teach_order": 3, "term": "enfermero", "article": "el", "gender": "m", "feminine_form": "enfermera", "part_of_speech": "noun", "definition": "nurse", "example_sentence": "Mi madre es enfermera."},
+    {"teach_order": 2, "term": "hospital", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "hospital", "example_sentence": "El hospital está cerca de mi casa."},
+    {"teach_order": 2, "term": "farmacia", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "pharmacy / chemist's", "example_sentence": "¿Hay una farmacia por aquí?"},
+    {"teach_order": 3, "term": "centro de salud", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "health centre / GP surgery", "example_sentence": "El centro de salud abre a las ocho."},
+    {"teach_order": 3, "term": "pastilla", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "pill / tablet", "example_sentence": "Tomo una pastilla para el dolor."},
+    {"teach_order": 2, "term": "dolor", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "pain / ache", "example_sentence": "Tengo un dolor muy fuerte."},
+    {"teach_order": 3, "term": "fiebre", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "fever / temperature", "example_sentence": "El niño tiene fiebre."},
+    {"teach_order": 3, "term": "resfriado", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "cold (illness)", "example_sentence": "Tengo un resfriado."},
+
+    {"teach_order": 2, "term": "enfermo", "feminine_form": "enferma", "part_of_speech": "adjective", "definition": "ill / sick", "example_sentence": "Hoy estoy enfermo."},
+    {"teach_order": 3, "term": "sano", "feminine_form": "sana", "part_of_speech": "adjective", "definition": "healthy", "example_sentence": "La fruta es muy sana."},
+    {"teach_order": 3, "term": "lavarse", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to wash (yourself)", "example_sentence": "Me lavo las manos antes de comer."},
+    {"teach_order": 3, "term": "descansar", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to rest", "example_sentence": "Necesito descansar."}
+  ]
+}

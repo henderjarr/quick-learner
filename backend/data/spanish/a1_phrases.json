@@ -1,0 +1,51 @@
+{
+  "cefr_level": "A1",
+  "topic": "introductions",
+  "items": [
+    {"teach_order": 1, "term": "hola", "part_of_speech": "interjection", "definition": "hello / hi", "example_sentence": "¡Hola! ¿Qué tal?"},
+    {"teach_order": 1, "term": "adiós", "part_of_speech": "interjection", "definition": "goodbye", "example_sentence": "Adiós, mamá."},
+    {"teach_order": 1, "term": "buenos días", "item_type": "phrase", "definition": "good morning", "example_sentence": "Buenos días, ¿qué tal?"},
+    {"teach_order": 1, "term": "buenas tardes", "item_type": "phrase", "definition": "good afternoon / good evening", "example_sentence": "Buenas tardes, señora García."},
+    {"teach_order": 1, "term": "buenas noches", "item_type": "phrase", "definition": "good evening / good night", "example_sentence": "Buenas noches, hasta mañana."},
+    {"teach_order": 1, "term": "hasta luego", "item_type": "phrase", "definition": "see you later / bye", "example_sentence": "Hasta luego, Marta."},
+    {"teach_order": 1, "term": "¿qué tal?", "item_type": "phrase", "definition": "how are you? / how's it going?", "example_sentence": "Hola, Juan, ¿qué tal?"},
+    {"teach_order": 1, "term": "me llamo", "item_type": "phrase", "definition": "my name is", "example_sentence": "Hola, me llamo Ana."},
+    {"teach_order": 1, "term": "¿cómo te llamas?", "item_type": "phrase", "definition": "what's your name?", "example_sentence": "Hola, ¿cómo te llamas?"},
+    {"teach_order": 2, "term": "mucho gusto", "item_type": "phrase", "definition": "nice to meet you", "example_sentence": "Me llamo Luis. Mucho gusto."},
+    {"teach_order": 2, "term": "encantado", "feminine_form": "encantada", "part_of_speech": "adjective", "definition": "pleased to meet you / delighted", "example_sentence": "—Soy Marta. —Encantado."},
+    {"teach_order": 1, "term": "¿de dónde eres?", "item_type": "phrase", "definition": "where are you from?", "example_sentence": "Hola, Pedro. ¿De dónde eres?"},
+    {"teach_order": 1, "term": "soy de", "item_type": "phrase", "definition": "I'm from", "example_sentence": "Soy de Bilbao."},
+
+    {"teach_order": 1, "term": "gracias", "part_of_speech": "interjection", "topic": "everyday", "definition": "thank you / thanks", "example_sentence": "Gracias por el café."},
+    {"teach_order": 1, "term": "muchas gracias", "item_type": "phrase", "topic": "everyday", "definition": "thank you very much", "example_sentence": "Muchas gracias por todo."},
+    {"teach_order": 1, "term": "de nada", "item_type": "phrase", "topic": "everyday", "definition": "you're welcome", "example_sentence": "—Gracias. —De nada."},
+    {"teach_order": 1, "term": "por favor", "item_type": "phrase", "topic": "everyday", "definition": "please", "example_sentence": "Una mesa para dos, por favor."},
+    {"teach_order": 1, "term": "perdón", "part_of_speech": "interjection", "topic": "everyday", "definition": "sorry / excuse me", "example_sentence": "Perdón, ¿dónde está la estación?"},
+    {"teach_order": 2, "term": "lo siento", "item_type": "phrase", "topic": "everyday", "definition": "I'm sorry", "example_sentence": "Lo siento, no puedo ir."},
+    {"teach_order": 3, "term": "disculpe", "item_type": "phrase", "topic": "everyday", "definition": "excuse me (formal, to get attention)", "example_sentence": "Disculpe, ¿tiene hora?"},
+    {"teach_order": 1, "term": "vale", "part_of_speech": "interjection", "topic": "everyday", "definition": "OK / all right", "usage_note": "very common in Spain", "example_sentence": "—¿Nos vemos a las ocho? —Vale."},
+    {"teach_order": 2, "term": "claro", "part_of_speech": "interjection", "topic": "everyday", "definition": "of course / sure", "example_sentence": "—¿Me ayudas? —¡Claro!"},
+    {"teach_order": 2, "term": "¡qué bien!", "item_type": "phrase", "topic": "everyday", "definition": "great! / how nice!", "example_sentence": "Mañana no trabajo. ¡Qué bien!"},
+
+    {"teach_order": 1, "term": "no entiendo", "item_type": "phrase", "topic": "work_study", "definition": "I don't understand", "example_sentence": "Perdona, no entiendo."},
+    {"teach_order": 1, "term": "no sé", "item_type": "phrase", "topic": "work_study", "definition": "I don't know", "example_sentence": "—¿Dónde está Ana? —No sé."},
+    {"teach_order": 2, "term": "más despacio", "item_type": "phrase", "topic": "work_study", "definition": "more slowly", "example_sentence": "¿Puedes hablar más despacio, por favor?"},
+    {"teach_order": 2, "term": "¿cómo se dice?", "item_type": "phrase", "topic": "work_study", "definition": "how do you say...?", "example_sentence": "¿Cómo se dice 'window' en español?"},
+    {"teach_order": 2, "term": "¿qué significa?", "item_type": "phrase", "topic": "work_study", "definition": "what does it mean?", "example_sentence": "¿Qué significa esta palabra?"},
+
+    {"teach_order": 2, "term": "tengo que", "item_type": "phrase", "topic": "everyday", "definition": "I have to", "usage_note": "tener que + infinitive", "example_sentence": "Tengo que trabajar mañana."},
+    {"teach_order": 2, "term": "voy a", "item_type": "phrase", "topic": "everyday", "definition": "I'm going to (future plans)", "usage_note": "ir a + infinitive", "example_sentence": "Voy a cenar con mis padres."},
+    {"teach_order": 1, "term": "tengo hambre", "item_type": "phrase", "topic": "food_drink", "definition": "I'm hungry", "example_sentence": "Tengo hambre. ¿Comemos?"},
+    {"teach_order": 1, "term": "tengo sed", "item_type": "phrase", "topic": "food_drink", "definition": "I'm thirsty", "example_sentence": "Tengo sed, quiero agua."},
+    {"teach_order": 2, "term": "tengo frío", "item_type": "phrase", "topic": "free_time_weather", "definition": "I'm cold", "example_sentence": "Tengo frío, ¿cierras la ventana?"},
+    {"teach_order": 2, "term": "tengo calor", "item_type": "phrase", "topic": "free_time_weather", "definition": "I'm hot", "example_sentence": "Tengo mucho calor."},
+    {"teach_order": 3, "term": "me gustaría", "item_type": "phrase", "topic": "food_drink", "definition": "I would like", "example_sentence": "Me gustaría un café."},
+    {"teach_order": 2, "term": "¿me pone?", "item_type": "phrase", "topic": "food_drink", "definition": "could I have...? (ordering at a bar)", "usage_note": "very common in Spain: ¿me pone un café?", "example_sentence": "¿Me pone un café con leche?"},
+
+    {"teach_order": 1, "term": "¿cuánto cuesta?", "item_type": "phrase", "topic": "shopping_clothes", "definition": "how much does it cost?", "example_sentence": "¿Cuánto cuesta el café?"},
+    {"teach_order": 2, "term": "¿cuánto es?", "item_type": "phrase", "topic": "shopping_clothes", "definition": "how much is it? (total)", "example_sentence": "¿Cuánto es todo?"},
+    {"teach_order": 1, "term": "¿dónde está?", "item_type": "phrase", "topic": "city_transport", "definition": "where is...?", "example_sentence": "¿Dónde está el baño?"},
+    {"teach_order": 1, "term": "¿qué hora es?", "item_type": "phrase", "topic": "numbers_time", "definition": "what time is it?", "example_sentence": "Perdona, ¿qué hora es?"},
+    {"teach_order": 2, "term": "¿a qué hora?", "item_type": "phrase", "topic": "numbers_time", "definition": "at what time?", "example_sentence": "¿A qué hora sale el tren?"}
+  ]
+}

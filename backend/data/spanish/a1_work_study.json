@@ -1,0 +1,47 @@
+{
+  "cefr_level": "A1",
+  "topic": "work_study",
+  "items": [
+    {"teach_order": 1, "term": "trabajo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "work / job", "example_sentence": "Tengo un trabajo nuevo."},
+    {"teach_order": 2, "term": "oficina", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "office", "example_sentence": "Mi oficina está en el centro."},
+    {"teach_order": 2, "term": "empresa", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "company / business", "example_sentence": "Trabajo en una empresa pequeña."},
+    {"teach_order": 2, "term": "jefe", "article": "el", "gender": "m", "feminine_form": "jefa", "part_of_speech": "noun", "definition": "boss", "example_sentence": "Mi jefa es muy simpática."},
+    {"teach_order": 2, "term": "compañero", "article": "el", "gender": "m", "feminine_form": "compañera", "part_of_speech": "noun", "definition": "colleague / classmate", "example_sentence": "Mi compañero de trabajo es de Italia."},
+    {"teach_order": 1, "term": "profesor", "article": "el", "gender": "m", "feminine_form": "profesora", "part_of_speech": "noun", "definition": "teacher", "example_sentence": "Mi profesor es de Salamanca."},
+    {"teach_order": 1, "term": "estudiante", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "student", "usage_note": "same form for both: el estudiante, la estudiante", "example_sentence": "Soy estudiante de medicina."},
+    {"teach_order": 3, "term": "alumno", "article": "el", "gender": "m", "feminine_form": "alumna", "part_of_speech": "noun", "definition": "pupil / student", "example_sentence": "En mi clase hay veinte alumnos."},
+    {"teach_order": 2, "term": "colegio", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "school", "example_sentence": "Los niños van al colegio a las nueve."},
+    {"teach_order": 2, "term": "universidad", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "university", "example_sentence": "Estudio en la universidad."},
+    {"teach_order": 1, "term": "clase", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "class / lesson / classroom", "example_sentence": "La clase de español es los lunes."},
+    {"teach_order": 2, "term": "examen", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "exam", "example_sentence": "El examen es muy difícil."},
+    {"teach_order": 1, "term": "libro", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "book", "example_sentence": "Leo un libro en el tren."},
+    {"teach_order": 3, "term": "cuaderno", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "notebook", "example_sentence": "Escribo en mi cuaderno."},
+    {"teach_order": 2, "term": "bolígrafo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "pen", "usage_note": "often shortened to el boli", "example_sentence": "¿Tienes un bolígrafo?"},
+    {"teach_order": 2, "term": "pregunta", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "question", "example_sentence": "Tengo una pregunta."},
+    {"teach_order": 2, "term": "respuesta", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "answer", "example_sentence": "La respuesta es correcta."},
+    {"teach_order": 2, "term": "palabra", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "word", "example_sentence": "No sé esta palabra."},
+    {"teach_order": 2, "term": "idioma", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "language", "usage_note": "masculine even though it ends in -a", "example_sentence": "Hablo tres idiomas."},
+    {"teach_order": 1, "term": "español", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "Spanish (the language)", "example_sentence": "El español es muy útil."},
+    {"teach_order": 1, "term": "inglés", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "English (the language)", "example_sentence": "Mi hija estudia inglés."},
+    {"teach_order": 3, "term": "deberes", "article": "los", "gender": "m", "part_of_speech": "noun", "definition": "homework", "example_sentence": "Hago los deberes por la tarde."},
+    {"teach_order": 3, "term": "reunión", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "meeting", "example_sentence": "Tengo una reunión a las diez."},
+    {"teach_order": 2, "term": "correo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "email / post", "usage_note": "correo electrónico = email", "example_sentence": "¿Cuál es tu correo electrónico?"},
+    {"teach_order": 1, "term": "teléfono", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "telephone", "example_sentence": "El teléfono está en la mesa."},
+    {"teach_order": 1, "term": "móvil", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "mobile phone", "example_sentence": "Mi móvil no tiene batería."},
+    {"teach_order": 2, "term": "número", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "number", "example_sentence": "Vivo en el número cinco."},
+
+    {"teach_order": 3, "term": "abogado", "article": "el", "gender": "m", "feminine_form": "abogada", "part_of_speech": "noun", "definition": "lawyer", "example_sentence": "Mi hermana es abogada."},
+    {"teach_order": 3, "term": "ingeniero", "article": "el", "gender": "m", "feminine_form": "ingeniera", "part_of_speech": "noun", "definition": "engineer", "example_sentence": "Mi padre es ingeniero."},
+    {"teach_order": 3, "term": "dependiente", "article": "el", "gender": "m", "feminine_form": "dependienta", "part_of_speech": "noun", "definition": "shop assistant", "example_sentence": "La dependienta me ayuda."},
+    {"teach_order": 3, "term": "policía", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "police officer", "usage_note": "el policía / la policía (a person); la policía also means the police force", "example_sentence": "Mi tío es policía."},
+
+    {"teach_order": 2, "term": "difícil", "part_of_speech": "adjective", "definition": "difficult", "example_sentence": "Esta pregunta es difícil."},
+    {"teach_order": 2, "term": "fácil", "part_of_speech": "adjective", "definition": "easy", "example_sentence": "El examen es fácil."},
+    {"teach_order": 2, "term": "interesante", "part_of_speech": "adjective", "definition": "interesting", "example_sentence": "Es una ciudad muy interesante."},
+    {"teach_order": 2, "term": "ocupado", "feminine_form": "ocupada", "part_of_speech": "adjective", "definition": "busy / occupied", "example_sentence": "Mi jefe siempre está ocupado."},
+    {"teach_order": 3, "term": "aburrido", "feminine_form": "aburrida", "part_of_speech": "adjective", "definition": "boring (with ser) / bored (with estar)", "example_sentence": "La reunión es aburrida."},
+
+    {"teach_order": 3, "term": "explicar", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to explain", "example_sentence": "El profesor explica la gramática."},
+    {"teach_order": 3, "term": "enviar", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to send", "usage_note": "accent in some forms: envío, envías", "example_sentence": "Te envío un correo."}
+  ]
+}

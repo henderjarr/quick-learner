@@ -49,12 +49,31 @@ class VocabularyItem(Base):
     domain_id = Column(Integer, ForeignKey("domains.id"))
     # the actual word/phrase to learn
     term = Column(String, index=True)
-    # meaning of the term
+    # meaning of the term, in English only (it's shown as the hint in exercises)
     definition = Column(Text)
+    # optional Spanish usage tip, e.g. "cerca de = near to" (never shown as a hint)
+    usage_note = Column(Text, nullable=True)
     # example usage in context
     example_sentence = Column(Text)
     # difficulty level, e.g. "A1", "B2"
     cefr_level = Column(String)
+    # grammar category, e.g. "verb", "pronoun", "noun" (empty for phrases)
+    part_of_speech = Column(String, nullable=True)
+    # nouns only: the article learned with the word, e.g. "el" (el perro), "die" (die Katze)
+    article = Column(String, nullable=True)
+    # nouns only: grammatical gender "m", "f" (or "n" in German).
+    # Stored separately because they can differ: "el agua" takes "el" but is feminine.
+    gender = Column(String, nullable=True)
+    # the feminine form if the word has one, e.g. "amiga" (amigo), "buena" (bueno)
+    feminine_form = Column(String, nullable=True)
+    # verbs only: how the present tense conjugates, e.g. "regular", "stem_change_o_ue", "irregular_yo"
+    conjugation_type = Column(String, nullable=True)
+    # real-life scene the word belongs to, e.g. "cafe", "home_family" ("core" = basics)
+    topic = Column(String, nullable=True)
+    # teaching tier within a level: 1 = first weeks, 2 = early, 3 = later (a teaching choice, not pure frequency)
+    teach_order = Column(Integer, nullable=True)
+    # "word" (e.g. "perro") or "phrase" (e.g. "me llamo")
+    item_type = Column(String, default="word")
 
     # lets you access vocab_item.domain in Python (not a real column)
     domain = relationship("Domain")

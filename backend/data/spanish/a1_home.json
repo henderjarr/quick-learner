@@ -1,0 +1,41 @@
+{
+  "cefr_level": "A1",
+  "topic": "home",
+  "items": [
+    {"teach_order": 1, "term": "casa", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "house / home", "usage_note": "en casa = at home, a casa = (to) home", "example_sentence": "Hoy trabajo desde casa."},
+    {"teach_order": 1, "term": "piso", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "flat / apartment; floor (of a building)", "example_sentence": "Mi piso tiene dos habitaciones."},
+    {"teach_order": 1, "term": "habitación", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "room / bedroom", "example_sentence": "Mi habitación es pequeña."},
+    {"teach_order": 3, "term": "dormitorio", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "bedroom", "example_sentence": "El dormitorio tiene una ventana grande."},
+    {"teach_order": 2, "term": "cocina", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "kitchen / cooking", "example_sentence": "La cocina es nueva."},
+    {"teach_order": 1, "term": "baño", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "bathroom / toilet", "example_sentence": "El baño es muy pequeño."},
+    {"teach_order": 2, "term": "salón", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "living room", "example_sentence": "Vemos la tele en el salón."},
+    {"teach_order": 3, "term": "terraza", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "terrace / balcony", "example_sentence": "Desayunamos en la terraza."},
+    {"teach_order": 3, "term": "jardín", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "garden", "example_sentence": "Mis padres tienen un jardín."},
+    {"teach_order": 2, "term": "puerta", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "door", "example_sentence": "Llaman a la puerta."},
+    {"teach_order": 2, "term": "ventana", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "window", "example_sentence": "Abro la ventana."},
+    {"teach_order": 1, "term": "mesa", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "table", "usage_note": "poner la mesa = to set the table", "example_sentence": "Ponemos la mesa."},
+    {"teach_order": 2, "term": "silla", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "chair", "example_sentence": "Necesito otra silla."},
+    {"teach_order": 2, "term": "sofá", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "sofa", "example_sentence": "Tenemos un sofá nuevo."},
+    {"teach_order": 2, "term": "cama", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "bed", "example_sentence": "Me voy a la cama."},
+    {"teach_order": 3, "term": "armario", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "wardrobe / cupboard", "example_sentence": "La ropa está en el armario."},
+    {"teach_order": 2, "term": "nevera", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "fridge", "example_sentence": "La nevera está vacía."},
+    {"teach_order": 3, "term": "luz", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "light / electricity", "example_sentence": "No hay luz en la cocina."},
+    {"teach_order": 2, "term": "televisión", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "television", "usage_note": "often shortened to la tele", "example_sentence": "La televisión está en el salón."},
+    {"teach_order": 2, "term": "ordenador", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "computer", "example_sentence": "Trabajo con el ordenador."},
+    {"teach_order": 2, "term": "llave", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "key", "example_sentence": "¿Dónde están las llaves?"},
+    {"teach_order": 3, "term": "ducha", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "shower", "example_sentence": "La ducha está en el baño."},
+    {"teach_order": 3, "term": "escalera", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "stairs", "example_sentence": "Subo por la escalera."},
+    {"teach_order": 3, "term": "ascensor", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "lift / elevator", "example_sentence": "Mi edificio no tiene ascensor."},
+    {"teach_order": 3, "term": "edificio", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "building", "example_sentence": "Vivo en un edificio muy alto."},
+
+    {"teach_order": 1, "term": "bonito", "feminine_form": "bonita", "part_of_speech": "adjective", "definition": "pretty / nice", "example_sentence": "Tu piso es muy bonito."},
+    {"teach_order": 2, "term": "cómodo", "feminine_form": "cómoda", "part_of_speech": "adjective", "definition": "comfortable", "example_sentence": "Esta silla es muy cómoda."},
+    {"teach_order": 2, "term": "nuevo", "feminine_form": "nueva", "part_of_speech": "adjective", "definition": "new", "example_sentence": "Mi móvil es nuevo."},
+    {"teach_order": 3, "term": "limpio", "feminine_form": "limpia", "part_of_speech": "adjective", "definition": "clean", "example_sentence": "La cocina está limpia."},
+    {"teach_order": 3, "term": "sucio", "feminine_form": "sucia", "part_of_speech": "adjective", "definition": "dirty", "example_sentence": "La ropa está sucia."},
+    {"teach_order": 3, "term": "vacío", "feminine_form": "vacía", "part_of_speech": "adjective", "definition": "empty", "example_sentence": "El piso está vacío."},
+
+    {"teach_order": 3, "term": "alquilar", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to rent", "example_sentence": "Alquilo un piso en el centro."},
+    {"teach_order": 3, "term": "funcionar", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to work (machines)", "example_sentence": "El wifi no funciona."}
+  ]
+}

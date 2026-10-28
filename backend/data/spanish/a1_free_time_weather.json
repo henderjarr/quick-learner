@@ -1,0 +1,39 @@
+{
+  "cefr_level": "A1",
+  "topic": "free_time_weather",
+  "items": [
+    {"teach_order": 1, "term": "tiempo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "weather / time", "example_sentence": "¿Qué tiempo hace?"},
+    {"teach_order": 1, "term": "hace calor", "item_type": "phrase", "definition": "it's hot (weather)", "example_sentence": "Hoy hace calor."},
+    {"teach_order": 1, "term": "hace frío", "item_type": "phrase", "definition": "it's cold (weather)", "example_sentence": "En Burgos hace frío."},
+    {"teach_order": 2, "term": "hace sol", "item_type": "phrase", "definition": "it's sunny", "example_sentence": "Hace sol, vamos a la playa."},
+    {"teach_order": 2, "term": "sol", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "sun", "example_sentence": "Me gusta tomar el sol."},
+    {"teach_order": 3, "term": "lluvia", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "rain", "example_sentence": "No me gusta la lluvia."},
+    {"teach_order": 2, "term": "llover", "part_of_speech": "verb", "conjugation_type": "stem_change_o_ue", "definition": "to rain", "example_sentence": "Llueve mucho en Galicia."},
+    {"teach_order": 3, "term": "nieve", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "snow", "example_sentence": "Hay nieve en la montaña."},
+    {"teach_order": 3, "term": "viento", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "wind", "example_sentence": "Hace mucho viento."},
+    {"teach_order": 2, "term": "calor", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "heat", "example_sentence": "¡Qué calor!"},
+    {"teach_order": 2, "term": "frío", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "cold (the cold)", "example_sentence": "No me gusta el frío."},
+    {"teach_order": 2, "term": "montaña", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "mountain", "example_sentence": "Los fines de semana voy a la montaña."},
+    {"teach_order": 2, "term": "mar", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "sea", "example_sentence": "El mar está muy frío hoy."},
+    {"teach_order": 3, "term": "río", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "river", "example_sentence": "El río Ebro es muy largo."},
+
+    {"teach_order": 1, "term": "deporte", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "sport", "usage_note": "hacer deporte = to do sport / exercise", "example_sentence": "Hago deporte tres veces a la semana."},
+    {"teach_order": 2, "term": "fútbol", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "football (soccer)", "example_sentence": "El fútbol es muy popular en España."},
+    {"teach_order": 1, "term": "música", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "music", "example_sentence": "¿Qué música te gusta?"},
+    {"teach_order": 2, "term": "película", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "film / movie", "example_sentence": "Esta película es muy buena."},
+    {"teach_order": 2, "term": "fiesta", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "party / festival / public holiday", "example_sentence": "Hay una fiesta en casa de Ana."},
+    {"teach_order": 1, "term": "vacaciones", "article": "las", "gender": "f", "part_of_speech": "noun", "definition": "holidays / vacation", "usage_note": "always plural: estar de vacaciones = to be on holiday", "example_sentence": "En agosto estoy de vacaciones."},
+    {"teach_order": 3, "term": "piscina", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "swimming pool", "example_sentence": "La piscina abre en verano."},
+    {"teach_order": 3, "term": "teatro", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "theatre", "example_sentence": "Vamos al teatro el sábado."},
+    {"teach_order": 3, "term": "concierto", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "concert", "example_sentence": "El concierto empieza a las diez."},
+    {"teach_order": 3, "term": "juego", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "game", "example_sentence": "Es un juego muy divertido."},
+    {"teach_order": 2, "term": "foto", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "photo", "usage_note": "feminine: short for la fotografía", "example_sentence": "Hago muchas fotos en mis viajes."},
+    {"teach_order": 2, "term": "tiempo libre", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "free time", "example_sentence": "En mi tiempo libre leo."},
+
+    {"teach_order": 2, "term": "divertido", "feminine_form": "divertida", "part_of_speech": "adjective", "definition": "fun / funny", "example_sentence": "La fiesta es muy divertida."},
+    {"teach_order": 2, "term": "favorito", "feminine_form": "favorita", "part_of_speech": "adjective", "definition": "favourite", "example_sentence": "¿Cuál es tu deporte favorito?"},
+    {"teach_order": 2, "term": "libre", "part_of_speech": "adjective", "definition": "free (not busy) / available", "example_sentence": "Mañana estoy libre."},
+
+    {"teach_order": 2, "term": "pasear", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to go for a walk / to stroll", "example_sentence": "Paseamos por la playa."}
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "cefr_level": "A1",
+  "topic": "city_transport",
+  "items": [
+    {"teach_order": 1, "term": "ciudad", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "city / town", "example_sentence": "Madrid es una ciudad muy grande."},
+    {"teach_order": 2, "term": "pueblo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "village / small town", "example_sentence": "Mis abuelos viven en un pueblo."},
+    {"teach_order": 1, "term": "calle", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "street", "example_sentence": "Vivo en la calle Mayor."},
+    {"teach_order": 2, "term": "plaza", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "square (in a town)", "example_sentence": "Quedamos en la plaza."},
+    {"teach_order": 1, "term": "centro", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "centre / city centre", "example_sentence": "Trabajo en el centro."},
+    {"teach_order": 2, "term": "barrio", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "neighbourhood", "example_sentence": "Mi barrio es muy tranquilo."},
+    {"teach_order": 2, "term": "dirección", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "address / direction", "example_sentence": "¿Cuál es tu dirección?"},
+    {"teach_order": 2, "term": "banco", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "bank / bench", "example_sentence": "El banco cierra a las dos."},
+    {"teach_order": 2, "term": "museo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "museum", "example_sentence": "Los domingos el museo es gratis."},
+    {"teach_order": 2, "term": "parque", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "park", "example_sentence": "Hay un parque cerca de mi casa."},
+    {"teach_order": 2, "term": "playa", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "beach", "example_sentence": "La playa está a diez minutos."},
+    {"teach_order": 2, "term": "estación", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "station / season", "example_sentence": "La estación de tren está lejos."},
+    {"teach_order": 2, "term": "aeropuerto", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "airport", "example_sentence": "Voy al aeropuerto en taxi."},
+    {"teach_order": 2, "term": "hotel", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "hotel", "example_sentence": "El hotel tiene piscina."},
+    {"teach_order": 3, "term": "iglesia", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "church", "example_sentence": "La iglesia está en la plaza."},
+    {"teach_order": 2, "term": "cine", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "cinema", "example_sentence": "El cine está al lado del bar."},
+    {"teach_order": 3, "term": "esquina", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "corner (of a street)", "example_sentence": "Te espero en la esquina."},
+
+    {"teach_order": 1, "term": "metro", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "underground / subway", "example_sentence": "Cojo el metro para ir a clase."},
+    {"teach_order": 1, "term": "autobús", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "bus", "example_sentence": "El autobús llega tarde."},
+    {"teach_order": 1, "term": "tren", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "train", "example_sentence": "Viajo en tren a Barcelona."},
+    {"teach_order": 1, "term": "coche", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "car", "example_sentence": "No tengo coche."},
+    {"teach_order": 2, "term": "taxi", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "taxi", "example_sentence": "Llamo a un taxi."},
+    {"teach_order": 2, "term": "avión", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "plane", "example_sentence": "Voy a Londres en avión."},
+    {"teach_order": 2, "term": "bicicleta", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "bicycle", "usage_note": "often shortened to la bici", "example_sentence": "Voy a clase en bicicleta."},
+    {"teach_order": 2, "term": "billete", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "ticket (for transport) / banknote", "example_sentence": "Un billete de ida y vuelta, por favor."},
+    {"teach_order": 2, "term": "parada", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "stop (bus, tram)", "example_sentence": "La parada está enfrente del banco."},
+    {"teach_order": 2, "term": "viaje", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "trip / journey", "example_sentence": "¡Buen viaje!"},
+    {"teach_order": 3, "term": "maleta", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "suitcase", "example_sentence": "Mi maleta es azul."},
+    {"teach_order": 3, "term": "pasaporte", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "passport", "example_sentence": "Necesito mi pasaporte."},
+
+    {"teach_order": 2, "term": "izquierda", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "left", "usage_note": "a la izquierda = on the left", "example_sentence": "La farmacia está a la izquierda."},
+    {"teach_order": 2, "term": "derecha", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "right (direction)", "usage_note": "a la derecha = on the right", "example_sentence": "Mi casa está a la derecha."},
+    {"teach_order": 2, "term": "recto", "part_of_speech": "adverb", "definition": "straight on", "usage_note": "todo recto = straight ahead", "example_sentence": "La estación está todo recto."},
+    {"teach_order": 3, "term": "enfrente", "part_of_speech": "adverb", "definition": "opposite / across the street", "usage_note": "enfrente de = opposite", "example_sentence": "Mi oficina está enfrente."},
+    {"teach_order": 2, "term": "al lado de", "item_type": "phrase", "definition": "next to", "example_sentence": "Vivo al lado de la estación."},
+
+    {"teach_order": 2, "term": "visitar", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to visit", "example_sentence": "Quiero visitar el Museo del Prado."},
+    {"teach_order": 3, "term": "girar", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to turn", "example_sentence": "El autobús gira a la izquierda."},
+    {"teach_order": 3, "term": "cruzar", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to cross", "example_sentence": "Cruzo la calle."},
+
+    {"teach_order": 2, "term": "tranquilo", "feminine_form": "tranquila", "part_of_speech": "adjective", "definition": "quiet / calm", "example_sentence": "Es un pueblo muy tranquilo."},
+    {"teach_order": 3, "term": "ruidoso", "feminine_form": "ruidosa", "part_of_speech": "adjective", "definition": "noisy", "example_sentence": "Mi calle es muy ruidosa."},
+    {"teach_order": 3, "term": "antiguo", "feminine_form": "antigua", "part_of_speech": "adjective", "definition": "old / ancient", "example_sentence": "El centro es muy antiguo."},
+    {"teach_order": 3, "term": "moderno", "feminine_form": "moderna", "part_of_speech": "adjective", "definition": "modern", "example_sentence": "El aeropuerto es muy moderno."}
+  ]
+}
