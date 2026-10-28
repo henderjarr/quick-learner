@@ -44,11 +44,16 @@ def generate_exercise(user_id: int, domain_id: int, db: Session = Depends(get_db
         raise HTTPException(
             status_code=404, detail="No due vocabulary for this user")
 
-    exercise_data = ai_service.generate_exercise_from_words(
-        domain_name=domain.name,
-        system_prompt=domain.system_prompt,
-        vocabulary_items=due_items
-    )
+    try:
+        exercise_data = ai_service.generate_exercise_from_words(
+            domain_name=domain.name,
+            system_prompt=domain.system_prompt,
+            vocabulary_items=due_items
+        )
+    except Exception as e:  # OpenAI down, or the AI kept breaking the rules
+        print(f"AI generation failed: {e}")
+        raise HTTPException(
+            status_code=502, detail="AI could not generate an exercise, try again")
 
     new_exercise = data_manager.create_exercise(
         db,
@@ -56,7 +61,7 @@ def generate_exercise(user_id: int, domain_id: int, db: Session = Depends(get_db
         type=exercise_data["type"],
         prompt=exercise_data["prompt"],
         correct_answer=exercise_data["correct_answer"],
-        # primary word this exercise is centered on
+        # the target word (the answer); SRS updates this word on submit
         vocabulary_item_id=due_items[0].id,
         generated_by_ai=True
     )
