@@ -4,7 +4,6 @@ from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text, Bool
 from sqlalchemy.orm import relationship
 from database import Base
 
-db = Base()
 
 # users, represents a local user of the application, the progress of the user is tracked in this database:
 

@@ -50,6 +50,7 @@ def create_vocabulary_item(db: Session, domain_id: int, term: str, definition: s
         example_sentence=example_sentence,
         cefr_level=cefr_level
     )
+
     db.add(item)
     db.commit()
     db.refresh(item)
