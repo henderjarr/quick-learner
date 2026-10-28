@@ -23,6 +23,8 @@
     {"teach_order": 3, "term": "dieciocho", "part_of_speech": "number", "definition": "eighteen", "example_sentence": "En España puedes conducir a los dieciocho años."},
     {"teach_order": 3, "term": "diecinueve", "part_of_speech": "number", "definition": "nineteen", "example_sentence": "La habitación diecinueve está libre."},
     {"teach_order": 2, "term": "veinte", "part_of_speech": "number", "definition": "twenty", "example_sentence": "Son veinte euros."},
+    {"teach_order": 3, "term": "veintiuno", "part_of_speech": "number", "definition": "twenty-one", "usage_note": "veintiún before a masculine noun (veintiún años); 21–29 are one word; accents on veintidós, veintitrés, veintiséis; from 31: treinta y uno", "example_sentence": "Tengo veintiún años."},
+    {"teach_order": 3, "term": "veintidós", "part_of_speech": "number", "definition": "twenty-two", "example_sentence": "Mi hermana tiene veintidós años."},
     {"teach_order": 2, "term": "treinta", "part_of_speech": "number", "definition": "thirty", "example_sentence": "Septiembre tiene treinta días."},
     {"teach_order": 3, "term": "cuarenta", "part_of_speech": "number", "definition": "forty", "example_sentence": "Mi padre tiene cuarenta años."},
     {"teach_order": 3, "term": "cincuenta", "part_of_speech": "number", "definition": "fifty", "example_sentence": "El abrigo cuesta cincuenta euros."},
@@ -31,6 +33,9 @@
     {"teach_order": 3, "term": "ochenta", "part_of_speech": "number", "definition": "eighty", "example_sentence": "El hotel tiene ochenta habitaciones."},
     {"teach_order": 3, "term": "noventa", "part_of_speech": "number", "definition": "ninety", "example_sentence": "El viaje dura noventa minutos."},
     {"teach_order": 2, "term": "cien", "part_of_speech": "number", "definition": "a hundred", "example_sentence": "Hay cien personas en la fiesta."},
+    {"teach_order": 3, "term": "ciento", "part_of_speech": "number", "definition": "hundred (in 101–199)", "usage_note": "cien = exactly 100; ciento veinte = 120", "example_sentence": "El billete cuesta ciento veinte euros."},
+    {"teach_order": 3, "term": "doscientos", "feminine_form": "doscientas", "part_of_speech": "number", "definition": "two hundred", "example_sentence": "La habitación cuesta doscientos euros."},
+    {"teach_order": 3, "term": "quinientos", "feminine_form": "quinientas", "part_of_speech": "number", "definition": "five hundred", "usage_note": "irregular: not cincocientos", "example_sentence": "Mi sofá cuesta quinientos euros."},
     {"teach_order": 3, "term": "mil", "part_of_speech": "number", "definition": "a thousand", "example_sentence": "El ordenador cuesta mil euros."},
     {"teach_order": 2, "term": "primero", "feminine_form": "primera", "part_of_speech": "adjective", "definition": "first", "usage_note": "primer before a masculine noun: el primer día", "example_sentence": "Es la primera vez que estoy en Madrid."},
     {"teach_order": 3, "term": "segundo", "feminine_form": "segunda", "part_of_speech": "adjective", "definition": "second", "example_sentence": "Vivo en el segundo piso."},
@@ -90,6 +95,8 @@
     {"teach_order": 2, "term": "y media", "item_type": "phrase", "definition": "half past (the hour)", "example_sentence": "Son las dos y media."},
     {"teach_order": 2, "term": "y cuarto", "item_type": "phrase", "definition": "quarter past (the hour)", "example_sentence": "Son las cinco y cuarto."},
     {"teach_order": 3, "term": "menos cuarto", "item_type": "phrase", "definition": "quarter to (the hour)", "example_sentence": "Son las ocho menos cuarto."},
+    {"teach_order": 2, "term": "en punto", "item_type": "phrase", "definition": "o'clock (exactly)", "example_sentence": "Son las tres en punto."},
+    {"teach_order": 2, "term": "la una", "item_type": "phrase", "definition": "one o'clock", "usage_note": "singular: es la una, but son las dos", "example_sentence": "Es la una y media."},
     {"teach_order": 2, "term": "a veces", "item_type": "phrase", "definition": "sometimes", "example_sentence": "A veces como en el trabajo."},
     {"teach_order": 2, "term": "todos los días", "item_type": "phrase", "definition": "every day", "example_sentence": "Hago deporte todos los días."}
   ]

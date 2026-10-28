@@ -6,6 +6,8 @@
     {"teach_order": 1, "term": "hace calor", "item_type": "phrase", "definition": "it's hot (weather)", "example_sentence": "Hoy hace calor."},
     {"teach_order": 1, "term": "hace frío", "item_type": "phrase", "definition": "it's cold (weather)", "example_sentence": "En Burgos hace frío."},
     {"teach_order": 2, "term": "hace sol", "item_type": "phrase", "definition": "it's sunny", "example_sentence": "Hace sol, vamos a la playa."},
+    {"teach_order": 2, "term": "hace buen tiempo", "item_type": "phrase", "definition": "the weather's nice", "example_sentence": "Hoy hace buen tiempo."},
+    {"teach_order": 3, "term": "hace mal tiempo", "item_type": "phrase", "definition": "the weather's bad", "example_sentence": "En noviembre hace mal tiempo."},
     {"teach_order": 2, "term": "sol", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "sun", "example_sentence": "Me gusta tomar el sol."},
     {"teach_order": 3, "term": "lluvia", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "rain", "example_sentence": "No me gusta la lluvia."},
     {"teach_order": 2, "term": "llover", "part_of_speech": "verb", "conjugation_type": "stem_change_o_ue", "definition": "to rain", "example_sentence": "Llueve mucho en Galicia."},

@@ -19,7 +19,7 @@
     {"teach_order": 2, "term": "bolígrafo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "pen", "usage_note": "often shortened to el boli", "example_sentence": "¿Tienes un bolígrafo?"},
     {"teach_order": 2, "term": "pregunta", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "question", "example_sentence": "Tengo una pregunta."},
     {"teach_order": 2, "term": "respuesta", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "answer", "example_sentence": "La respuesta es correcta."},
-    {"teach_order": 2, "term": "palabra", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "word", "example_sentence": "No sé esta palabra."},
+    {"teach_order": 2, "term": "palabra", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "word", "example_sentence": "No conozco esta palabra."},
     {"teach_order": 2, "term": "idioma", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "language", "usage_note": "masculine even though it ends in -a", "example_sentence": "Hablo tres idiomas."},
     {"teach_order": 1, "term": "español", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "Spanish (the language)", "example_sentence": "El español es muy útil."},
     {"teach_order": 1, "term": "inglés", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "English (the language)", "example_sentence": "Mi hija estudia inglés."},

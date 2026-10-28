@@ -32,6 +32,8 @@
     {"teach_order": 1, "term": "español", "feminine_form": "española", "part_of_speech": "adjective", "definition": "Spanish", "example_sentence": "Mi novio es español."},
     {"teach_order": 1, "term": "inglés", "feminine_form": "inglesa", "part_of_speech": "adjective", "definition": "English", "example_sentence": "John es inglés."},
     {"teach_order": 2, "term": "francés", "feminine_form": "francesa", "part_of_speech": "adjective", "definition": "French", "example_sentence": "Mi profesora es francesa."},
+    {"teach_order": 2, "term": "alemán", "feminine_form": "alemana", "part_of_speech": "adjective", "definition": "German", "example_sentence": "Mi vecina es alemana."},
+    {"teach_order": 2, "term": "italiano", "feminine_form": "italiana", "part_of_speech": "adjective", "definition": "Italian", "example_sentence": "Me encanta la comida italiana."},
 
     {"teach_order": 1, "term": "alto", "feminine_form": "alta", "part_of_speech": "adjective", "definition": "tall / high", "example_sentence": "Mi hermano es muy alto."},
     {"teach_order": 1, "term": "bajo", "feminine_form": "baja", "part_of_speech": "adjective", "definition": "short (height) / low", "example_sentence": "Mi madre es baja."},
@@ -39,6 +41,7 @@
     {"teach_order": 1, "term": "pequeño", "feminine_form": "pequeña", "part_of_speech": "adjective", "definition": "small", "example_sentence": "El perro es pequeño."},
     {"teach_order": 2, "term": "joven", "part_of_speech": "adjective", "definition": "young", "example_sentence": "Mi profesora es muy joven."},
     {"teach_order": 2, "term": "mayor", "part_of_speech": "adjective", "definition": "older / elderly (polite for people)", "example_sentence": "Mi hermano mayor vive en Londres."},
+    {"teach_order": 2, "term": "menor", "part_of_speech": "adjective", "definition": "younger", "example_sentence": "Mi hermana menor estudia en Salamanca."},
     {"teach_order": 3, "term": "viejo", "feminine_form": "vieja", "part_of_speech": "adjective", "definition": "old (for things; can be rude for people)", "example_sentence": "Este coche es muy viejo."},
     {"teach_order": 1, "term": "guapo", "feminine_form": "guapa", "part_of_speech": "adjective", "definition": "good-looking", "example_sentence": "Tu hermana es muy guapa."},
     {"teach_order": 3, "term": "feo", "feminine_form": "fea", "part_of_speech": "adjective", "definition": "ugly", "example_sentence": "Este edificio es feo."},

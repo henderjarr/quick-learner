@@ -29,7 +29,7 @@
     {"teach_order": 3, "term": "sopa", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "soup", "example_sentence": "En invierno tomo sopa."},
     {"teach_order": 1, "term": "fruta", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "fruit", "example_sentence": "Me gusta mucho la fruta."},
     {"teach_order": 2, "term": "manzana", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "apple", "example_sentence": "Quiero una manzana."},
-    {"teach_order": 2, "term": "naranja", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "orange (fruit)", "example_sentence": "Las naranjas de Valencia son famosas."},
+    {"teach_order": 2, "term": "naranja", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "orange (fruit / colour)", "usage_note": "as a colour it doesn't change: un coche naranja", "example_sentence": "Las naranjas de Valencia son famosas."},
     {"teach_order": 2, "term": "plátano", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "banana", "example_sentence": "Desayuno un plátano."},
     {"teach_order": 2, "term": "tomate", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "tomato", "example_sentence": "El tomate es rojo."},
     {"teach_order": 2, "term": "verdura", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "vegetables", "example_sentence": "Como mucha verdura."},
@@ -42,6 +42,8 @@
 
     {"teach_order": 1, "term": "restaurante", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "restaurant", "example_sentence": "Hay un restaurante italiano en mi calle."},
     {"teach_order": 1, "term": "bar", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "bar / café (for drinks and tapas)", "example_sentence": "¿Quedamos en el bar de la esquina?"},
+    {"teach_order": 1, "term": "tapa", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "small snack served with a drink", "example_sentence": "Con la cerveza ponen una tapa."},
+    {"teach_order": 1, "term": "caña", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "small draught beer", "example_sentence": "Dos cañas, por favor."},
     {"teach_order": 2, "term": "camarero", "article": "el", "gender": "m", "feminine_form": "camarera", "part_of_speech": "noun", "definition": "waiter", "example_sentence": "El camarero es muy amable."},
     {"teach_order": 2, "term": "menú", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "set lunch / menu", "usage_note": "el menú del día = the set lunch of the day", "example_sentence": "El menú del día cuesta doce euros."},
     {"teach_order": 3, "term": "carta", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "menu (list of dishes) / letter", "example_sentence": "¿Me trae la carta, por favor?"},

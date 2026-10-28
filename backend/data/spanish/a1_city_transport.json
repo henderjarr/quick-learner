@@ -3,6 +3,7 @@
   "topic": "city_transport",
   "items": [
     {"teach_order": 1, "term": "ciudad", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "city / town", "example_sentence": "Madrid es una ciudad muy grande."},
+    {"teach_order": 1, "term": "país", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "country", "example_sentence": "España es un país muy bonito."},
     {"teach_order": 2, "term": "pueblo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "village / small town", "example_sentence": "Mis abuelos viven en un pueblo."},
     {"teach_order": 1, "term": "calle", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "street", "example_sentence": "Vivo en la calle Mayor."},
     {"teach_order": 2, "term": "plaza", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "square (in a town)", "example_sentence": "Quedamos en la plaza."},

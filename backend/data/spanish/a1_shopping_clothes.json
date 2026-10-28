@@ -8,7 +8,7 @@
     {"teach_order": 3, "term": "panadería", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "bakery", "example_sentence": "La panadería está en la esquina."},
     {"teach_order": 1, "term": "dinero", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "money", "example_sentence": "No tengo dinero."},
     {"teach_order": 1, "term": "euro", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "euro", "example_sentence": "Un café cuesta un euro y medio."},
-    {"teach_order": 2, "term": "precio", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "price", "example_sentence": "¿Cuál es el precio?"},
+    {"teach_order": 2, "term": "precio", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "price", "example_sentence": "El precio es muy bueno."},
     {"teach_order": 2, "term": "tarjeta", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "card (bank card)", "example_sentence": "Pago con tarjeta."},
     {"teach_order": 3, "term": "efectivo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "cash", "usage_note": "en efectivo = in cash", "example_sentence": "¿Puedo pagar en efectivo?"},
     {"teach_order": 3, "term": "rebajas", "article": "las", "gender": "f", "part_of_speech": "noun", "definition": "sales (discounts)", "example_sentence": "En enero hay rebajas."},
@@ -30,6 +30,7 @@
     {"teach_order": 2, "term": "abrigo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "coat", "example_sentence": "En invierno llevo abrigo."},
     {"teach_order": 3, "term": "jersey", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "jumper / sweater", "example_sentence": "Este jersey es de lana."},
     {"teach_order": 3, "term": "bolso", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "handbag", "example_sentence": "Mi bolso es negro."},
+    {"teach_order": 2, "term": "bolsa", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "bag (shopping / plastic)", "example_sentence": "¿Quiere bolsa?"},
     {"teach_order": 2, "term": "gafas", "article": "las", "gender": "f", "part_of_speech": "noun", "definition": "glasses", "example_sentence": "No veo bien sin gafas."},
 
     {"teach_order": 2, "term": "color", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "colour", "example_sentence": "¿De qué color es?"},

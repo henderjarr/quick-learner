@@ -8,6 +8,7 @@
     {"teach_order": 1, "term": "buenas tardes", "item_type": "phrase", "definition": "good afternoon / good evening", "example_sentence": "Buenas tardes, señora García."},
     {"teach_order": 1, "term": "buenas noches", "item_type": "phrase", "definition": "good evening / good night", "example_sentence": "Buenas noches, hasta mañana."},
     {"teach_order": 1, "term": "hasta luego", "item_type": "phrase", "definition": "see you later / bye", "example_sentence": "Hasta luego, Marta."},
+    {"teach_order": 2, "term": "nos vemos", "item_type": "phrase", "definition": "see you", "example_sentence": "Nos vemos mañana."},
     {"teach_order": 1, "term": "¿qué tal?", "item_type": "phrase", "definition": "how are you? / how's it going?", "example_sentence": "Hola, Juan, ¿qué tal?"},
     {"teach_order": 1, "term": "me llamo", "item_type": "phrase", "definition": "my name is", "example_sentence": "Hola, me llamo Ana."},
     {"teach_order": 1, "term": "¿cómo te llamas?", "item_type": "phrase", "definition": "what's your name?", "example_sentence": "Hola, ¿cómo te llamas?"},
@@ -21,6 +22,7 @@
     {"teach_order": 1, "term": "de nada", "item_type": "phrase", "topic": "everyday", "definition": "you're welcome", "example_sentence": "—Gracias. —De nada."},
     {"teach_order": 1, "term": "por favor", "item_type": "phrase", "topic": "everyday", "definition": "please", "example_sentence": "Una mesa para dos, por favor."},
     {"teach_order": 1, "term": "perdón", "part_of_speech": "interjection", "topic": "everyday", "definition": "sorry / excuse me", "example_sentence": "Perdón, ¿dónde está la estación?"},
+    {"teach_order": 1, "term": "perdona", "item_type": "phrase", "topic": "everyday", "definition": "excuse me / sorry (informal)", "usage_note": "more common than perdón in Spain to get attention", "example_sentence": "Perdona, ¿tienes hora?"},
     {"teach_order": 2, "term": "lo siento", "item_type": "phrase", "topic": "everyday", "definition": "I'm sorry", "example_sentence": "Lo siento, no puedo ir."},
     {"teach_order": 3, "term": "disculpe", "item_type": "phrase", "topic": "everyday", "definition": "excuse me (formal, to get attention)", "example_sentence": "Disculpe, ¿tiene hora?"},
     {"teach_order": 1, "term": "vale", "part_of_speech": "interjection", "topic": "everyday", "definition": "OK / all right", "usage_note": "very common in Spain", "example_sentence": "—¿Nos vemos a las ocho? —Vale."},
@@ -41,6 +43,7 @@
     {"teach_order": 2, "term": "tengo calor", "item_type": "phrase", "topic": "free_time_weather", "definition": "I'm hot", "example_sentence": "Tengo mucho calor."},
     {"teach_order": 3, "term": "me gustaría", "item_type": "phrase", "topic": "food_drink", "definition": "I would like", "example_sentence": "Me gustaría un café."},
     {"teach_order": 2, "term": "¿me pone?", "item_type": "phrase", "topic": "food_drink", "definition": "could I have...? (ordering at a bar)", "usage_note": "very common in Spain: ¿me pone un café?", "example_sentence": "¿Me pone un café con leche?"},
+    {"teach_order": 3, "term": "¡que aproveche!", "item_type": "phrase", "topic": "food_drink", "definition": "enjoy your meal", "example_sentence": "La comida está en la mesa. ¡Que aproveche!"},
 
     {"teach_order": 1, "term": "¿cuánto cuesta?", "item_type": "phrase", "topic": "shopping_clothes", "definition": "how much does it cost?", "example_sentence": "¿Cuánto cuesta el café?"},
     {"teach_order": 2, "term": "¿cuánto es?", "item_type": "phrase", "topic": "shopping_clothes", "definition": "how much is it? (total)", "example_sentence": "¿Cuánto es todo?"},

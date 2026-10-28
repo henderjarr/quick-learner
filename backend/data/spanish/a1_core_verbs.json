@@ -7,6 +7,7 @@
     {"teach_order": 1, "term": "tener", "part_of_speech": "verb", "conjugation_type": "irregular", "definition": "to have", "example_sentence": "Tengo dos hermanos."},
     {"teach_order": 1, "term": "hay", "part_of_speech": "verb", "conjugation_type": "irregular", "definition": "there is / there are (from haber)", "example_sentence": "Hay un bar en la esquina."},
     {"teach_order": 1, "term": "ir", "part_of_speech": "verb", "conjugation_type": "irregular", "definition": "to go", "example_sentence": "Voy al trabajo en metro."},
+    {"teach_order": 2, "term": "irse", "part_of_speech": "verb", "conjugation_type": "irregular", "definition": "to leave / to go away", "usage_note": "me voy = I'm off", "example_sentence": "Me voy a casa."},
     {"teach_order": 1, "term": "querer", "part_of_speech": "verb", "conjugation_type": "stem_change_e_ie", "definition": "to want / to love", "example_sentence": "Quiero un café."},
     {"teach_order": 1, "term": "poder", "part_of_speech": "verb", "conjugation_type": "stem_change_o_ue", "definition": "can / to be able to", "example_sentence": "¿Puedo pagar con tarjeta?"},
     {"teach_order": 1, "term": "hacer", "part_of_speech": "verb", "conjugation_type": "irregular_yo", "definition": "to do / to make", "example_sentence": "¿Qué haces el fin de semana?"},

@@ -7,6 +7,7 @@
     {"teach_order": 2, "term": "ojo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "eye", "example_sentence": "Tiene los ojos azules."},
     {"teach_order": 2, "term": "pelo", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "hair", "example_sentence": "Tengo el pelo largo."},
     {"teach_order": 2, "term": "boca", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "mouth", "example_sentence": "Me duele la boca."},
+    {"teach_order": 2, "term": "garganta", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "throat", "example_sentence": "Me duele la garganta."},
     {"teach_order": 3, "term": "nariz", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "nose", "example_sentence": "Tengo la nariz roja."},
     {"teach_order": 3, "term": "oreja", "article": "la", "gender": "f", "part_of_speech": "noun", "definition": "ear", "example_sentence": "Me duelen las orejas por el frío."},
     {"teach_order": 3, "term": "diente", "article": "el", "gender": "m", "part_of_speech": "noun", "definition": "tooth", "example_sentence": "Me lavo los dientes tres veces al día."},
