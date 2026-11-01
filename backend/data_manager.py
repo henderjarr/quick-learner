@@ -145,7 +145,7 @@ def get_due_cards_for_user(db: Session, user_id: int):
             SrsCard.user_id == user_id,
             SrsCard.due_at <= now
         )
-    ).all()
+    ).order_by(SrsCard.due_at).all()  # most overdue first
 
 
 def get_or_create_srs_card(db: Session, user_id: int, vocabulary_item_id: int):

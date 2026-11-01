@@ -7,6 +7,7 @@ from database import SessionLocal
 from schemas import VocabularyItemOut, AnswerSubmit, AnswerResult
 import data_manager
 import ai_service
+from answer_check import normalize_answer
 
 
 app = FastAPI()
@@ -41,8 +42,13 @@ def generate_exercise(user_id: int, domain_id: int, db: Session = Depends(get_db
 
     due_items = data_manager.get_due_vocabulary_items_for_user(db, user_id)
     if not due_items:
+        # nothing to review right now, so start the learner on a few new words
+        data_manager.introduce_new_words(db, user_id, domain_id)
+        due_items = data_manager.get_due_vocabulary_items_for_user(
+            db, user_id)
+    if not due_items:
         raise HTTPException(
-            status_code=404, detail="No due vocabulary for this user")
+            status_code=404, detail="No new words left to learn in this domain")
 
     try:
         exercise_data = ai_service.generate_exercise_from_words(
@@ -67,11 +73,6 @@ def generate_exercise(user_id: int, domain_id: int, db: Session = Depends(get_db
     )
 
     return new_exercise
-
-
-def normalize_answer(text: str) -> str:
-    """Lowercase, trim, and drop surrounding punctuation so 'Perro.' matches 'perro'."""
-    return text.strip().strip(".,!?¡¿;:\"'").strip().lower()
 
 
 @app.post("/exercises/{exercise_id}/submit", response_model=AnswerResult)
