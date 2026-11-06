@@ -1,6 +1,7 @@
 # backend/main.py
 from typing import List
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from database import SessionLocal
@@ -9,8 +10,16 @@ import data_manager
 import ai_service
 from answer_check import normalize_answer
 
-
 app = FastAPI()
+
+# Cors middleware, to allow cross platform communication
+origins = ["http://localhost:5173"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_methods=["*"],
+)
 
 # Dependency: gives each request its own DB session, closes it afterward
 
@@ -28,8 +37,10 @@ def read_vocabulary(domain_id: int, db: Session = Depends(get_db)):
     items = data_manager.get_vocabulary_by_domain(db, domain_id)
     if not items:
         raise HTTPException(
-            status_code=404, detail="No vocabulary found for this domain")
+            status_code=404, detail="No vocabulary found for this domain"
+        )
     return items
+
 
 # add to main.py
 
@@ -44,22 +55,23 @@ def generate_exercise(user_id: int, domain_id: int, db: Session = Depends(get_db
     if not due_items:
         # nothing to review right now, so start the learner on a few new words
         data_manager.introduce_new_words(db, user_id, domain_id)
-        due_items = data_manager.get_due_vocabulary_items_for_user(
-            db, user_id)
+        due_items = data_manager.get_due_vocabulary_items_for_user(db, user_id)
     if not due_items:
         raise HTTPException(
-            status_code=404, detail="No new words left to learn in this domain")
+            status_code=404, detail="No new words left to learn in this domain"
+        )
 
     try:
         exercise_data = ai_service.generate_exercise_from_words(
             domain_name=domain.name,
             system_prompt=domain.system_prompt,
-            vocabulary_items=due_items
+            vocabulary_items=due_items,
         )
     except Exception as e:  # OpenAI down, or the AI kept breaking the rules
         print(f"AI generation failed: {e}")
         raise HTTPException(
-            status_code=502, detail="AI could not generate an exercise, try again")
+            status_code=502, detail="AI could not generate an exercise, try again"
+        )
 
     new_exercise = data_manager.create_exercise(
         db,
@@ -69,14 +81,16 @@ def generate_exercise(user_id: int, domain_id: int, db: Session = Depends(get_db
         correct_answer=exercise_data["correct_answer"],
         # the target word (the answer); SRS updates this word on submit
         vocabulary_item_id=due_items[0].id,
-        generated_by_ai=True
+        generated_by_ai=True,
     )
 
     return new_exercise
 
 
 @app.post("/exercises/{exercise_id}/submit", response_model=AnswerResult)
-def submit_answer(exercise_id: int, submission: AnswerSubmit, db: Session = Depends(get_db)):
+def submit_answer(
+    exercise_id: int, submission: AnswerSubmit, db: Session = Depends(get_db)
+):
     exercise = data_manager.get_exercise_by_id(db, exercise_id)
     if not exercise:
         raise HTTPException(status_code=404, detail="Exercise not found")
@@ -84,8 +98,9 @@ def submit_answer(exercise_id: int, submission: AnswerSubmit, db: Session = Depe
     domain = data_manager.get_domain_by_id(db, exercise.domain_id)
 
     # 1. Check the answer: plain code decides (fast, free, can't be wrong)
-    is_correct = normalize_answer(submission.user_answer) == \
-        normalize_answer(exercise.correct_answer)
+    is_correct = normalize_answer(submission.user_answer) == normalize_answer(
+        exercise.correct_answer
+    )
 
     # 2. Ask the AI to explain the result
     try:
@@ -94,7 +109,7 @@ def submit_answer(exercise_id: int, submission: AnswerSubmit, db: Session = Depe
             exercise_prompt=exercise.prompt,
             correct_answer=exercise.correct_answer,
             user_answer=submission.user_answer,
-            is_correct=is_correct
+            is_correct=is_correct,
         )
     except Exception as e:  # OpenAI down, bad JSON, etc.
         print(f"AI evaluation failed: {e}")
@@ -108,14 +123,15 @@ def submit_answer(exercise_id: int, submission: AnswerSubmit, db: Session = Depe
         exercise_id=exercise.id,
         user_answer=submission.user_answer,
         is_correct=is_correct,
-        ai_feedback=ai_feedback
+        ai_feedback=ai_feedback,
     )
 
     # 4. Update spaced repetition for the word this exercise is linked to
     next_review_at = None
     if exercise.vocabulary_item_id is not None:
         card = data_manager.get_or_create_srs_card(
-            db, submission.user_id, exercise.vocabulary_item_id)
+            db, submission.user_id, exercise.vocabulary_item_id
+        )
         card = data_manager.update_srs_card(db, card, is_correct)
         next_review_at = card.due_at
 
@@ -124,5 +140,5 @@ def submit_answer(exercise_id: int, submission: AnswerSubmit, db: Session = Depe
         is_correct=is_correct,
         correct_answer=exercise.correct_answer,
         ai_feedback=ai_feedback,
-        next_review_at=next_review_at
+        next_review_at=next_review_at,
     )

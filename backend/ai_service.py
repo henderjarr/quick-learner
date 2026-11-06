@@ -2,16 +2,23 @@
 # Everything that talks to OpenAI lives here.
 # Each function follows the same 5 steps: input -> config -> messages -> API call -> parse.
 import os
+import json
 from openai import OpenAI
 from anthropic import Anthropic
 from dotenv import load_dotenv
-from answer_check import normalize_answer, remove_brackets, contains_whole_word
+from answer_check import (
+    normalize_answer,
+    remove_brackets,
+    contains_whole_word,
+    find_missing_accents,
+)
 
 load_dotenv()  # reads OPENAI_API_KEY from backend/.env
 
 openAi_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+openAi_model = "gpt-4o-mini"
 anthropic_client = Anthropic()
-model = "claude-sonnet-5-5"
+anthropic_model = "claude-sonnet-5-5"
 
 MAX_TRIES = 3  # how many times to ask the AI again if it breaks a rule
 
@@ -19,29 +26,59 @@ MAX_TRIES = 3  # how many times to ask the AI again if it breaks a rule
 
 
 # AI helpers
-def chat(messages, system=None, tool=None):
-    params = {
-        "model": model,
-        "max_tokens": 1000,
-        "messages": messages,
-    }
-    if system:
-        params["system"] = system
-    if tool:
-        params["tools"] = [tool]
+def chat(messages, system=None, tool=None, provider="openai"):
+    if provider == "anthropic":
+        params = {
+            "model": anthropic_model,
+            "max_tokens": 1000,
+            "messages": messages,
+        }
+        if system:
+            params["system"] = system
+        if tool:
+            params["tools"] = [tool]
 
-    response = anthropic_client.messages.create(**params)
+        response = anthropic_client.messages.create(**params)
 
-    text = "".join(block.text for block in response.content if block.type == "text")
-    tool_input = next(
-        (block.input for block in response.content if block.type == "tool_use"), None
-    )
-    return text, tool_input
+        text = "".join(block.text for block in response.content if block.type == "text")
+        tool_input = next(
+            (block.input for block in response.content if block.type == "tool_use"),
+            None,
+        )
+        return text, tool_input
+
+    if provider == "openai":
+        all_messages = messages
+        if system:
+            all_messages = [{"role": "system", "content": system}] + messages
+        params = {"model": openAi_model, "messages": all_messages}
+        if tool:
+            params["tools"] = [
+                {
+                    "type": "function",
+                    "function": {
+                        "name": tool["name"],
+                        "description": tool["description"],
+                        "parameters": tool["input_schema"],
+                    },
+                }
+            ]
+        response = openAi_client.chat.completions.create(**params)
+        message = response.choices[0].message
+        text = message.content or ""
+        tool_input = None
+        if message.tool_calls:
+            tool_input = json.loads(message.tool_calls[0].function.arguments)
+        return text, tool_input
+
+    raise ValueError(f"Unknown provider: {provider}")
 
 
 # Check helpers
 def find_exercise_problem(data: dict, target):
     """
+    checks for mistakes
+
     Checks the AI's exercise against our rules, in code (we don't just trust the AI).
     target: the VocabularyItem the exercise is for.
     Returns a short description of the first problem found, or None if it's fine.
@@ -143,6 +180,10 @@ def evaluate_answer(
         verdict = "The answer has already been graded as CORRECT. Explain why."
     else:
         verdict = "The answer has already been graded as INCORRECT. Explain why."
+
+    missing = find_missing_accents(user_answer, correct_answer)
+    if missing:
+        verdict += f" The only mistake is a missing accent. The correct letter is: {', '.join(missing)}. Write the letter with its accent in your feedback, and show the full correct word: {correct_answer}."
 
     user_prompt = f"""A learner answered this exercise.
 
