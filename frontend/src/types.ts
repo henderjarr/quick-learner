@@ -11,3 +11,13 @@ export type AnswerResult = {
   ai_feedback: string | null;
   next_review_at: string | null;
 };
+
+export type Flashcard = {
+  id: number;
+  term: string;
+  definition: string;
+  example_sentence: string | null;
+  cefr_level: string | null;
+};
+
+export type Screen = "home" | "flashcards" | "exercise" | "summary";

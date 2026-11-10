@@ -5,7 +5,13 @@ from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
 from database import SessionLocal
-from schemas import VocabularyItemOut, AnswerSubmit, AnswerResult
+from schemas import (
+    VocabularyItemOut,
+    AnswerSubmit,
+    AnswerResult,
+    FlashcardReviewResult,
+    FlashcardReviewSubmit,
+)
 import data_manager
 import ai_service
 from answer_check import normalize_answer
@@ -52,10 +58,7 @@ def generate_exercise(user_id: int, domain_id: int, db: Session = Depends(get_db
         raise HTTPException(status_code=404, detail="Domain not found")
 
     due_items = data_manager.get_due_vocabulary_items_for_user(db, user_id)
-    if not due_items:
-        # nothing to review right now, so start the learner on a few new words
-        data_manager.introduce_new_words(db, user_id, domain_id)
-        due_items = data_manager.get_due_vocabulary_items_for_user(db, user_id)
+
     if not due_items:
         raise HTTPException(
             status_code=404, detail="No new words left to learn in this domain"
@@ -141,4 +144,37 @@ def submit_answer(
         correct_answer=exercise.correct_answer,
         ai_feedback=ai_feedback,
         next_review_at=next_review_at,
+    )
+
+
+@app.get("/flashcards/due", response_model=List[VocabularyItemOut])
+def get_due_flashcards(user_id: int, domain_id: int, db: Session = Depends(get_db)):
+    cards = data_manager.get_due_vocabulary_items_for_user(
+        db, user_id, stage="flashcard", limit=10
+    )
+    if not cards:
+        # flashcard pile is empty, so start the learner on a few new words
+        data_manager.introduce_new_words(db, user_id, domain_id)
+        cards = data_manager.get_due_vocabulary_items_for_user(
+            db, user_id, stage="flashcard", limit=10
+        )
+    if not cards:
+        raise HTTPException(
+            status_code=404, detail="No new words left to learn in this domain"
+        )
+    return cards
+
+
+@app.post(
+    "/flashcards/{vocabulary_item_id}/review", response_model=FlashcardReviewResult
+)
+def review_flashcard(
+    vocabulary_item_id: int,
+    review: FlashcardReviewSubmit,
+    db: Session = Depends(get_db),
+):
+    card = data_manager.get_or_create_srs_card(db, review.user_id, vocabulary_item_id)
+    card = data_manager.review_flashcard(db, card, review.knew_it)
+    return FlashcardReviewResult(
+        vocabulary_item_id=vocabulary_item_id, stage=card.stage
     )

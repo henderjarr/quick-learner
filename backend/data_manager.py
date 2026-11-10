@@ -3,8 +3,14 @@ from sqlalchemy.orm import Session
 from sqlalchemy import and_, func, select
 from datetime import datetime, timezone, timedelta
 from models import (
-    Domain, VocabularyItem, GrammarRule, Exercise,
-    UserExerciseAttempt, SrsCard, User
+    Domain,
+    VocabularyItem,
+    GrammarRule,
+    Exercise,
+    UserExerciseAttempt,
+    SrsCard,
+    User,
+    FlashcardReview,
 )
 
 # ---------- Domain ----------
@@ -22,6 +28,7 @@ def get_domain_by_id(db: Session, domain_id: int):
 
 # ---------- VocabularyItem ----------
 
+
 def get_vocabulary_by_domain(db: Session, domain_id: int):
     """Fetch all vocabulary items for a specific domain."""
     return db.query(VocabularyItem).filter(VocabularyItem.domain_id == domain_id).all()
@@ -29,12 +36,16 @@ def get_vocabulary_by_domain(db: Session, domain_id: int):
 
 def get_vocabulary_by_domain_and_level(db: Session, domain_id: int, cefr_level: str):
     """Fetch vocabulary items for a specific domain and CEFR level."""
-    return db.query(VocabularyItem).filter(
-        and_(
-            VocabularyItem.domain_id == domain_id,
-            VocabularyItem.cefr_level == cefr_level
+    return (
+        db.query(VocabularyItem)
+        .filter(
+            and_(
+                VocabularyItem.domain_id == domain_id,
+                VocabularyItem.cefr_level == cefr_level,
+            )
         )
-    ).all()
+        .all()
+    )
 
 
 def get_vocabulary_item_by_id(db: Session, item_id: int):
@@ -42,13 +53,20 @@ def get_vocabulary_item_by_id(db: Session, item_id: int):
     return db.query(VocabularyItem).filter(VocabularyItem.id == item_id).first()
 
 
-def create_vocabulary_item(db: Session, domain_id: int, term: str, definition: str, example_sentence: str = None, cefr_level: str = None):
+def create_vocabulary_item(
+    db: Session,
+    domain_id: int,
+    term: str,
+    definition: str,
+    example_sentence: str = None,
+    cefr_level: str = None,
+):
     item = VocabularyItem(
         domain_id=domain_id,
         term=term,
         definition=definition,
         example_sentence=example_sentence,
-        cefr_level=cefr_level
+        cefr_level=cefr_level,
     )
 
     db.add(item)
@@ -57,14 +75,17 @@ def create_vocabulary_item(db: Session, domain_id: int, term: str, definition: s
     return item
 
 
-def get_due_vocabulary_items_for_user(db: Session, user_id: int, limit: int = 3):
-    due_cards = get_due_cards_for_user(db, user_id)
+def get_due_vocabulary_items_for_user(
+    db: Session, user_id: int, stage: str = "exercise", limit: int = 3
+):
+    due_cards = get_due_cards_for_user(db, user_id, stage)
     items = []
     for card in due_cards[:limit]:
         item = get_vocabulary_item_by_id(db, card.vocabulary_item_id)
         if item:
             items.append(item)
     return items
+
 
 # ---------- GrammarRule ----------
 
@@ -77,13 +98,11 @@ def get_grammar_rule_by_id(db: Session, rule_id: int):
     return db.query(GrammarRule).filter(GrammarRule.id == rule_id).first()
 
 
-def create_grammar_rule(db: Session, domain_id: int, title: str, explanation: str,
-                        cefr_level: str = None):
+def create_grammar_rule(
+    db: Session, domain_id: int, title: str, explanation: str, cefr_level: str = None
+):
     rule = GrammarRule(
-        domain_id=domain_id,
-        title=title,
-        explanation=explanation,
-        cefr_level=cefr_level
+        domain_id=domain_id, title=title, explanation=explanation, cefr_level=cefr_level
     )
     db.add(rule)
     db.commit()
@@ -93,9 +112,17 @@ def create_grammar_rule(db: Session, domain_id: int, title: str, explanation: st
 
 # ---------- Exercise ----------
 
-def create_exercise(db: Session, domain_id: int, type: str, prompt: str, correct_answer: str,
-                    vocabulary_item_id: int = None, grammar_rule_id: int = None,
-                    generated_by_ai: bool = True):
+
+def create_exercise(
+    db: Session,
+    domain_id: int,
+    type: str,
+    prompt: str,
+    correct_answer: str,
+    vocabulary_item_id: int = None,
+    grammar_rule_id: int = None,
+    generated_by_ai: bool = True,
+):
     exercise = Exercise(
         domain_id=domain_id,
         type=type,
@@ -103,7 +130,7 @@ def create_exercise(db: Session, domain_id: int, type: str, prompt: str, correct
         grammar_rule_id=grammar_rule_id,
         prompt=prompt,
         correct_answer=correct_answer,
-        generated_by_ai=generated_by_ai
+        generated_by_ai=generated_by_ai,
     )
     db.add(exercise)
     db.commit()
@@ -117,14 +144,21 @@ def get_exercise_by_id(db: Session, exercise_id: int):
 
 # ---------- UserExerciseAttempt ----------
 
-def create_attempt(db: Session, user_id: int, exercise_id: int, user_answer: str,
-                   is_correct: bool, ai_feedback: str = None):
+
+def create_attempt(
+    db: Session,
+    user_id: int,
+    exercise_id: int,
+    user_answer: str,
+    is_correct: bool,
+    ai_feedback: str = None,
+):
     attempt = UserExerciseAttempt(
         user_id=user_id,
         exercise_id=exercise_id,
         user_answer=user_answer,
         is_correct=is_correct,
-        ai_feedback=ai_feedback
+        ai_feedback=ai_feedback,
     )
     db.add(attempt)
     db.commit()
@@ -133,28 +167,43 @@ def create_attempt(db: Session, user_id: int, exercise_id: int, user_answer: str
 
 
 def get_attempts_by_user(db: Session, user_id: int):
-    return db.query(UserExerciseAttempt).filter(UserExerciseAttempt.user_id == user_id).all()
+    return (
+        db.query(UserExerciseAttempt)
+        .filter(UserExerciseAttempt.user_id == user_id)
+        .all()
+    )
 
 
 # ---------- SrsCard ----------
 
-def get_due_cards_for_user(db: Session, user_id: int):
+
+def get_due_cards_for_user(db: Session, user_id: int, stage: str):
     now = datetime.now(timezone.utc)
-    return db.query(SrsCard).filter(
-        and_(
-            SrsCard.user_id == user_id,
-            SrsCard.due_at <= now
+    return (
+        db.query(SrsCard)
+        .filter(
+            and_(
+                SrsCard.user_id == user_id,
+                SrsCard.stage == stage,
+                SrsCard.due_at <= now,
+            )
         )
-    ).order_by(SrsCard.due_at).all()  # most overdue first
+        .order_by(SrsCard.due_at)
+        .all()
+    )  # most overdue first
 
 
 def get_or_create_srs_card(db: Session, user_id: int, vocabulary_item_id: int):
-    card = db.query(SrsCard).filter(
-        and_(
-            SrsCard.user_id == user_id,
-            SrsCard.vocabulary_item_id == vocabulary_item_id
+    card = (
+        db.query(SrsCard)
+        .filter(
+            and_(
+                SrsCard.user_id == user_id,
+                SrsCard.vocabulary_item_id == vocabulary_item_id,
+            )
         )
-    ).first()
+        .first()
+    )
 
     if card is None:
         card = SrsCard(user_id=user_id, vocabulary_item_id=vocabulary_item_id)
@@ -165,6 +214,26 @@ def get_or_create_srs_card(db: Session, user_id: int, vocabulary_item_id: int):
     return card
 
 
+def review_flashcard(db: Session, card: SrsCard, knew_it: bool):
+    """Saves one flashcard answer. "Got it" moves the word on to the exercise stage."""
+    db.add(
+        FlashcardReview(
+            user_id=card.user_id,
+            vocabulary_item_id=card.vocabulary_item_id,
+            knew_it=knew_it,
+        )
+    )
+
+    if knew_it:
+        card.stage = "exercise"
+        # due now, so it can show up in an exercise straight away
+        card.due_at = datetime.now(timezone.utc)
+
+    db.commit()
+    db.refresh(card)
+    return card
+
+
 def introduce_new_words(db: Session, user_id: int, domain_id: int, limit: int = 5):
     """
     Starts the user on the next words they haven't seen yet, by creating SRS cards (due now).
@@ -172,19 +241,20 @@ def introduce_new_words(db: Session, user_id: int, domain_id: int, limit: int = 
     so topics get mixed instead of drilled one at a time.
     """
     # ids of words this user already has a card for
-    started_ids = select(SrsCard.vocabulary_item_id).where(
-        SrsCard.user_id == user_id)
+    started_ids = select(SrsCard.vocabulary_item_id).where(SrsCard.user_id == user_id)
 
-    new_items = db.query(VocabularyItem).filter(
-        and_(
-            VocabularyItem.domain_id == domain_id,
-            VocabularyItem.id.not_in(started_ids)
+    new_items = (
+        db.query(VocabularyItem)
+        .filter(
+            and_(
+                VocabularyItem.domain_id == domain_id,
+                VocabularyItem.id.not_in(started_ids),
+            )
         )
-    ).order_by(
-        VocabularyItem.cefr_level,
-        VocabularyItem.teach_order,
-        func.random()
-    ).limit(limit).all()
+        .order_by(VocabularyItem.cefr_level, VocabularyItem.teach_order, func.random())
+        .limit(limit)
+        .all()
+    )
 
     for item in new_items:
         db.add(SrsCard(user_id=user_id, vocabulary_item_id=item.id))
@@ -203,8 +273,7 @@ def update_srs_card(db: Session, card: SrsCard, is_correct: bool):
         card.interval_days = 1
         card.ease_factor = max(card.ease_factor - 0.2, 1.3)
 
-    card.due_at = datetime.now(timezone.utc) + \
-        timedelta(days=card.interval_days)
+    card.due_at = datetime.now(timezone.utc) + timedelta(days=card.interval_days)
 
     db.commit()
     db.refresh(card)
@@ -212,6 +281,7 @@ def update_srs_card(db: Session, card: SrsCard, is_correct: bool):
 
 
 # ---------- User ----------
+
 
 def get_or_create_default_user(db: Session):
     user = db.query(User).first()

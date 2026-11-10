@@ -1,15 +1,25 @@
 """Models for the backend application."""
+
 from datetime import datetime, timezone
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Text, Boolean, Float
+from sqlalchemy import (
+    Column,
+    Integer,
+    String,
+    DateTime,
+    ForeignKey,
+    Text,
+    Boolean,
+    Float,
+)
 from sqlalchemy.orm import relationship
 from database import Base
-
 
 # users, represents a local user of the application, the progress of the user is tracked in this database:
 
 
 class User(Base):
     """Represents a user of the application."""
+
     __tablename__ = "users"  # actual table name in the database
 
     # unique identifier for each user
@@ -21,8 +31,10 @@ class User(Base):
 # -------------------------------------------------
 # domains, represents a domain of knowledge, such as "Mathematics" or "History", and contains a list of topics within that domain:
 
+
 class Domain(Base):
     """Represents a domain of knowledge, such as "Mathematics" or "History", and contains a list of topics within that domain."""
+
     # NOTE: at the moment the only domain type is "language", but in the future we may add other types of domains, such as "roadrules" or "math"
     __tablename__ = "domains"
 
@@ -39,8 +51,10 @@ class Domain(Base):
 # -------------------------------------------------
 # vocabulary_items:
 
+
 class VocabularyItem(Base):
     """Represents a vocabulary item within a specific domain, such as a word or phrase to learn."""
+
     __tablename__ = "vocabulary_items"
 
     # unique identifier
@@ -82,8 +96,10 @@ class VocabularyItem(Base):
 # -------------------------------------------------
 # grammar_rules:
 
+
 class GrammarRule(Base):
     """Represents a grammar rule within a specific domain, such as a rule for verb conjugation or sentence structure."""
+
     __tablename__ = "grammar_rules"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -101,8 +117,10 @@ class GrammarRule(Base):
 # -------------------------------------------------
 # exercises:
 
+
 class Exercise(Base):
     """Represents an exercise within a specific domain, which can be either a vocabulary or grammar exercise."""
+
     __tablename__ = "exercises"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -110,11 +128,11 @@ class Exercise(Base):
     # what kind of question it is e.g. "vocabulary", "grammar"
     type = Column(String)
     # links to a specific vocabulary item or grammar rule, depending on the type of exercise
-    vocabulary_item_id = Column(Integer, ForeignKey(
-        "vocabulary_items.id"), nullable=True)
+    vocabulary_item_id = Column(
+        Integer, ForeignKey("vocabulary_items.id"), nullable=True
+    )
     # links to a specific grammar rule, depending on the type of exercise
-    grammar_rule_id = Column(Integer, ForeignKey(
-        "grammar_rules.id"), nullable=True)
+    grammar_rule_id = Column(Integer, ForeignKey("grammar_rules.id"), nullable=True)
     # the actual question text shown to the user
     prompt = Column(Text)
     # the correct answer to the question
@@ -127,8 +145,10 @@ class Exercise(Base):
 # -------------------------------------------------
 # user exercise attempts:
 
+
 class UserExerciseAttempt(Base):
     """Represents an attempt by a user to answer an exercise, including the user's answer, whether it was correct, and any AI feedback."""
+
     __tablename__ = "user_exercise_attempts"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -146,8 +166,10 @@ class UserExerciseAttempt(Base):
 # -------------------------------------------------
 # SRS = Spaced Repetition System.
 
+
 class SrsCard(Base):
     """Represents a spaced repetition system (SRS) card for a specific user and vocabulary item, tracking the user's progress in learning that item."""
+
     __tablename__ = "srs_cards"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -161,3 +183,22 @@ class SrsCard(Base):
     repetitions = Column(Integer, default=0)
     # the date and time when the user should next review this word (default is now)
     due_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+    # which pile the word is in: "flashcard" first, then "exercise" after "Got it"
+    stage = Column(String, default="flashcard")
+
+
+# -------------------------------------------------
+# flashcard reviews:
+
+
+class FlashcardReview(Base):
+    """Records one flashcard answer: did the user know this word at this moment?"""
+
+    __tablename__ = "flashcard_reviews"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"))
+    vocabulary_item_id = Column(Integer, ForeignKey("vocabulary_items.id"))
+    # True = "Got it", False = "Still learning"
+    knew_it = Column(Boolean)
+    reviewed_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
