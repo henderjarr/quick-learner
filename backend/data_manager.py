@@ -280,6 +280,22 @@ def update_srs_card(db: Session, card: SrsCard, is_correct: bool):
     return card
 
 
+def get_progress(db: Session, user_id: int, domain_id: int):
+    """Counts for the Home screen."""
+    return {
+        # reuse the existing function, then count the list
+        "flashcards_due": len(get_due_cards_for_user(db, user_id, "flashcard")),
+        "exercises_due": len(get_due_cards_for_user(db, user_id, "exercise")),
+        # every word that has reached the exercise stage, due or not
+        "words_in_practice": db.query(SrsCard)
+        .filter(and_(SrsCard.user_id == user_id, SrsCard.stage == "exercise"))
+        .count(),
+        "total_words": db.query(VocabularyItem)
+        .filter(VocabularyItem.domain_id == domain_id)
+        .count(),
+    }
+
+
 # ---------- User ----------
 
 

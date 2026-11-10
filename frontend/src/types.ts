@@ -21,3 +21,10 @@ export type Flashcard = {
 };
 
 export type Screen = "home" | "flashcards" | "exercise" | "summary";
+
+export type Progress = {
+  flashcards_due: number;
+  exercises_due: number;
+  words_in_practice: number;
+  total_words: number;
+};

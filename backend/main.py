@@ -11,6 +11,7 @@ from schemas import (
     AnswerResult,
     FlashcardReviewResult,
     FlashcardReviewSubmit,
+    ProgressOut,
 )
 import data_manager
 import ai_service
@@ -178,3 +179,8 @@ def review_flashcard(
     return FlashcardReviewResult(
         vocabulary_item_id=vocabulary_item_id, stage=card.stage
     )
+
+
+@app.get("/progress", response_model=ProgressOut)
+def get_progress(user_id: int, domain_id: int, db: Session = Depends(get_db)):
+    return data_manager.get_progress(db, user_id, domain_id)

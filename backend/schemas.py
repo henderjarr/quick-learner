@@ -42,3 +42,11 @@ class FlashcardReviewSubmit(BaseModel):
 class FlashcardReviewResult(BaseModel):
     vocabulary_item_id: int
     stage: str
+
+
+# numbers for the Home screen
+class ProgressOut(BaseModel):
+    flashcards_due: int
+    exercises_due: int
+    words_in_practice: int
+    total_words: int
