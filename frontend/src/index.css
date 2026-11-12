@@ -1,111 +1,377 @@
+/* ---------- Design tokens (from the mockup) ---------- */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --bg: #f5f7fa;
+  --surface: #ffffff;
+  --text: #1b1f24;
+  --text-muted: #4b5563;
+  --border: #d1d5db;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  --blue: #2563eb;
+  --blue-dark: #1d4ed8;
+  --blue-soft: #eff4ff;
+  --orange: #c2410c;
+  --orange-soft: #fff4ec;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --radius: 12px;
+  --shadow: 0 1px 3px rgba(17, 24, 39, 0.08);
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  --font-body: "Inter", system-ui, sans-serif;
+  --font-heading: "Space Grotesk", "Inter", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
 body {
   margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+#root {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 40px 16px;
 }
 
 h1,
 h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
+  font-family: var(--font-heading);
+  line-height: 1.15;
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
+p {
+  margin: 0; /* spacing comes from the parent's gap instead */
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+/* ---------- Buttons ---------- */
+button {
+  font: inherit;
+  font-weight: 600;
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---------- Shared pieces ---------- */
+.card {
+  background: var(--surface);
+  border-radius: 16px;
+  padding: 32px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
+.error {
+  color: var(--orange);
+  font-weight: 600;
+}
+
+.btn-primary {
+  background: var(--blue);
+  border-color: var(--blue);
+  color: #ffffff;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: var(--blue-dark);
+}
+
+.card > button {
+  align-self: flex-start;
+}
+
+/* ---------- Home ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.stat {
+  background: var(--blue-soft);
+  border-radius: var(--radius);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.stat-number {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--blue-dark);
+}
+
+.stat-label {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.card > .start-button {
+  align-self: stretch; /* full width, unlike other card buttons */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 14px 20px;
+  text-align: left;
+}
+
+.start-title {
+  font-size: 18px;
+}
+
+.start-sub {
+  font-size: 14px;
+  font-weight: 400;
+}
+
+h3 {
+  font-family: var(--font-heading);
+  font-size: 18px;
+  margin: 0 0 8px;
+}
+
+.topic-list {
+  list-style: none; /* no bullet points */
+  margin: 0;
+  padding: 0;
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+.topic-row {
+  width: 100%;
+  min-height: 56px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+  padding: 10px 16px;
+  border: none;
+  border-bottom: 1px solid #e5e7eb;
+  border-radius: 0;
+  text-align: left;
+  font-weight: 400;
+}
+
+.topic-list li:last-child .topic-row {
+  border-bottom: none;
+}
+
+.topic-row:hover {
+  background: var(--blue-soft);
+}
+
+.topic-name {
+  font-weight: 600;
+}
+
+/* ---------- Flashcards ---------- */
+.flashcard {
+  align-items: center; /* centre the children instead of stretching them */
+  justify-content: center;
+  text-align: center;
+  min-height: 320px;
+}
+
+.flashcard > button {
+  align-self: center; /* undo the Home rule ".card > button" for this card */
+}
+
+.flashcard-term {
+  font-size: 52px;
+}
+
+.flashcard-meaning {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.flashcard-example {
+  font-style: italic;
+  color: var(--text-muted);
+}
+
+.button-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+.button-row button {
+  min-width: 160px; /* both answer buttons the same width */
+}
+
+.btn-learning {
+  border: 2px solid var(--orange);
+  color: var(--orange);
+}
+
+.btn-learning:hover:not(:disabled) {
+  background: var(--orange-soft);
+}
+
+.small {
+  font-size: 14px;
+}
+
+.screen {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.screen-header {
+  display: flex;
+  align-items: baseline; /* line up the text bottoms of the title and the count */
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.progress {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 999px;
+  overflow: hidden; /* clips the fill to the rounded track */
+  margin-bottom: 6px;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--blue);
+  border-radius: 999px;
+  transition: width 0.3s; /* the bar slides instead of jumping */
+}
+
+.toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.toggle {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: #e5e7eb;
+  border-radius: var(--radius);
+}
+
+.toggle button {
+  min-height: 44px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  font-size: 14px;
+}
+
+.toggle button.active {
+  background: var(--surface);
+  color: var(--blue-dark);
+  box-shadow: var(--shadow);
+}
+
+.type-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--blue-dark);
+}
+
+/* ---------- Header + tab bar ---------- */
+.app-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* title left, Setup cog right (later) */
+  margin-bottom: 16px;
+}
+
+.brand {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 20px;
+}
+
+/* Phones first: the bar is stuck to the bottom of the screen */
+.navbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+}
+
+#root {
+  padding-bottom: 96px; /* room so the fixed bar never covers content */
+}
+
+.nav-link {
+  flex: 1; /* the three tabs share the width equally */
+  background: transparent;
+  border-color: transparent;
+  padding: 0 12px;
+}
+
+.nav-link:hover {
+  background: var(--blue-soft);
+}
+
+.nav-link.active {
+  background: var(--blue-soft);
+  color: var(--blue-dark);
+}
+
+/* Wider screens: the same bar sits under the header instead */
+@media (min-width: 700px) {
+  .navbar {
+    position: static;
+    padding: 0;
+    background: transparent;
+    border-top: none;
+    margin-bottom: 24px;
+  }
+
+  .nav-link {
+    flex: 0 0 auto; /* back to their natural width */
+  }
+
+  #root {
+    padding-bottom: 40px;
+  }
 }

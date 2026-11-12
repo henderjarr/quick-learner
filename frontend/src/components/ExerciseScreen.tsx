@@ -3,11 +3,7 @@ import { useState } from "react";
 import { generateExercise, submitAnswer } from "../api";
 import type { AnswerResult, Exercise } from "../types";
 
-type ExerciseScreenProps = {
-  onFinish: () => void;
-};
-
-function ExerciseScreen({ onFinish }: ExerciseScreenProps) {
+function ExerciseScreen() {
   const [exercise, setExercise] = useState<Exercise | null>(null);
   const [answer, setAnswer] = useState("");
   const [result, setResult] = useState<AnswerResult | null>(null);
@@ -77,7 +73,6 @@ function ExerciseScreen({ onFinish }: ExerciseScreenProps) {
           {result.ai_feedback && <p>{result.ai_feedback}</p>}
         </div>
       )}
-      <button onClick={onFinish}>Finish session</button>
     </section>
   );
 }

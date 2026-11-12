@@ -1,4 +1,10 @@
-import type { AnswerResult, Exercise, Flashcard, Progress } from "./types";
+import type {
+  AnswerResult,
+  Exercise,
+  Flashcard,
+  Progress,
+  Topic,
+} from "./types";
 
 const API_URL = "http://localhost:8000";
 const USER_ID = 1;
@@ -48,10 +54,18 @@ export async function submitAnswer(
   return response.json();
 }
 
-export async function getDueFlashcards(): Promise<Flashcard[]> {
-  const response = await fetch(
-    `${API_URL}/flashcards/due?user_id=${USER_ID}&domain_id=${DOMAIN_ID}`,
-  );
+export async function getDueFlashcards(
+  known = false,
+  topic?: string,
+): Promise<Flashcard[]> {
+  const params = new URLSearchParams({
+    user_id: String(USER_ID),
+    domain_id: String(DOMAIN_ID),
+  });
+  if (known) params.set("known", "true");
+  if (topic) params.set("topic", topic);
+
+  const response = await fetch(`${API_URL}/flashcards/due?${params}`);
 
   await throwIfNotOk(response);
 
@@ -78,6 +92,18 @@ export async function getProgress(): Promise<Progress> {
   const response = await fetch(
     `${API_URL}/progress?user_id=${USER_ID}&domain_id=${DOMAIN_ID}`,
   );
+
+  await throwIfNotOk(response);
+
+  return response.json();
+}
+
+export async function getTopics(): Promise<Topic[]> {
+  const params = new URLSearchParams({
+    user_id: String(USER_ID),
+    domain_id: String(DOMAIN_ID),
+  });
+  const response = await fetch(`${API_URL}/topics?${params}`);
 
   await throwIfNotOk(response);
 

@@ -1,5 +1,5 @@
 # backend/main.py
-from typing import List
+from typing import List, Optional
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
@@ -12,6 +12,7 @@ from schemas import (
     FlashcardReviewResult,
     FlashcardReviewSubmit,
     ProgressOut,
+    TopicOut,
 )
 import data_manager
 import ai_service
@@ -149,20 +150,24 @@ def submit_answer(
 
 
 @app.get("/flashcards/due", response_model=List[VocabularyItemOut])
-def get_due_flashcards(user_id: int, domain_id: int, db: Session = Depends(get_db)):
-    cards = data_manager.get_due_vocabulary_items_for_user(
-        db, user_id, stage="flashcard", limit=10
-    )
+def get_due_flashcards(
+    user_id: int,
+    domain_id: int,
+    known: bool = False,
+    topic: Optional[str] = None,
+    db: Session = Depends(get_db),
+):
+    if known:
+        # reviewing known words: just return them (an empty list is fine)
+        return data_manager.get_flashcards(
+            db, user_id, domain_id, known=True, topic=topic
+        )
+
+    cards = data_manager.get_flashcards(db, user_id, domain_id, topic=topic)
     if not cards:
         # flashcard pile is empty, so start the learner on a few new words
-        data_manager.introduce_new_words(db, user_id, domain_id)
-        cards = data_manager.get_due_vocabulary_items_for_user(
-            db, user_id, stage="flashcard", limit=10
-        )
-    if not cards:
-        raise HTTPException(
-            status_code=404, detail="No new words left to learn in this domain"
-        )
+        data_manager.introduce_new_words(db, user_id, domain_id, topic=topic)
+        cards = data_manager.get_flashcards(db, user_id, domain_id, topic=topic)
     return cards
 
 
@@ -184,3 +189,8 @@ def review_flashcard(
 @app.get("/progress", response_model=ProgressOut)
 def get_progress(user_id: int, domain_id: int, db: Session = Depends(get_db)):
     return data_manager.get_progress(db, user_id, domain_id)
+
+
+@app.get("/topics", response_model=List[TopicOut])
+def get_topics(user_id: int, domain_id: int, db: Session = Depends(get_db)):
+    return data_manager.get_topics(db, user_id, domain_id)

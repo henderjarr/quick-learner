@@ -1,19 +1,23 @@
 # pydantic schemas for the User and Question models
 
-from datetime import datetime
-from pydantic import BaseModel
 from typing import Optional
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict
 
 
 class VocabularyItemOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
     id: int
     term: str
     definition: str
     example_sentence: Optional[str] = None
     cefr_level: Optional[str] = None
-
-    class Config:
-        from_attributes = True
+    usage_note: Optional[str] = None  # the tip on the card back
+    part_of_speech: Optional[str] = None  # "noun", "verb"...
+    article: Optional[str] = None  # nouns: "el", "la"
+    gender: Optional[str] = None  # nouns: "m", "f"
+    topic: Optional[str] = None
 
 
 # what the client sends when answering an exercise
@@ -50,3 +54,11 @@ class ProgressOut(BaseModel):
     exercises_due: int
     words_in_practice: int
     total_words: int
+
+
+# one row of the topic list on the Home screen
+class TopicOut(BaseModel):
+    topic: str
+    total_words: int
+    learning: int  # started, still in the flashcard pile
+    known: int  # moved on to practice

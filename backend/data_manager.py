@@ -1,7 +1,7 @@
 # backend/data_manager.py
+from datetime import datetime, timezone, timedelta
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, func, select
-from datetime import datetime, timezone, timedelta
 from models import (
     Domain,
     VocabularyItem,
@@ -193,6 +193,41 @@ def get_due_cards_for_user(db: Session, user_id: int, stage: str):
     )  # most overdue first
 
 
+def get_flashcards(
+    db: Session,
+    user_id: int,
+    domain_id: int,
+    known: bool = False,
+    topic: str = None,
+    limit: int = 10,
+):
+    """
+    Words for the flashcard screen.
+    known=False: flashcard-stage words that are due, most overdue first, up to `limit`.
+    known=True: every word already moved to practice, shuffled, due or not.
+    """
+    # start from the words, and attach each word's SRS card for this user
+    query = (
+        db.query(VocabularyItem)
+        .join(SrsCard, SrsCard.vocabulary_item_id == VocabularyItem.id)
+        .filter(SrsCard.user_id == user_id, VocabularyItem.domain_id == domain_id)
+    )
+
+    if topic:
+        query = query.filter(VocabularyItem.topic == topic)
+
+    if known:
+        return query.filter(SrsCard.stage == "exercise").order_by(func.random()).all()
+
+    now = datetime.now(timezone.utc)
+    return (
+        query.filter(SrsCard.stage == "flashcard", SrsCard.due_at <= now)
+        .order_by(SrsCard.due_at)
+        .limit(limit)
+        .all()
+    )
+
+
 def get_or_create_srs_card(db: Session, user_id: int, vocabulary_item_id: int):
     card = (
         db.query(SrsCard)
@@ -226,15 +261,21 @@ def review_flashcard(db: Session, card: SrsCard, knew_it: bool):
 
     if knew_it:
         card.stage = "exercise"
-        # due now, so it can show up in an exercise straight away
-        card.due_at = datetime.now(timezone.utc)
+    else:
+        # "Still learning": the word belongs in the flashcard pile
+        # (this is what moves a known word back when you've forgotten it)
+        card.stage = "flashcard"
+    # due now, in whichever pile it is in
+    card.due_at = datetime.now(timezone.utc)
 
     db.commit()
     db.refresh(card)
     return card
 
 
-def introduce_new_words(db: Session, user_id: int, domain_id: int, limit: int = 5):
+def introduce_new_words(
+    db: Session, user_id: int, domain_id: int, limit: int = 5, topic: str = None
+):
     """
     Starts the user on the next words they haven't seen yet, by creating SRS cards (due now).
     Order: lowest CEFR level first, then teach_order tier, then random within a tier
@@ -242,16 +283,19 @@ def introduce_new_words(db: Session, user_id: int, domain_id: int, limit: int = 
     """
     # ids of words this user already has a card for
     started_ids = select(SrsCard.vocabulary_item_id).where(SrsCard.user_id == user_id)
+    query = db.query(VocabularyItem).filter(
+        and_(
+            VocabularyItem.domain_id == domain_id,
+            VocabularyItem.id.not_in(started_ids),
+        )
+    )
+    if topic:
+        query = query.filter(VocabularyItem.topic == topic)
 
     new_items = (
-        db.query(VocabularyItem)
-        .filter(
-            and_(
-                VocabularyItem.domain_id == domain_id,
-                VocabularyItem.id.not_in(started_ids),
-            )
+        query.order_by(
+            VocabularyItem.cefr_level, VocabularyItem.teach_order, func.random()
         )
-        .order_by(VocabularyItem.cefr_level, VocabularyItem.teach_order, func.random())
         .limit(limit)
         .all()
     )
@@ -294,6 +338,43 @@ def get_progress(db: Session, user_id: int, domain_id: int):
         .filter(VocabularyItem.domain_id == domain_id)
         .count(),
     }
+
+
+def get_topics(db: Session, user_id: int, domain_id: int):
+    """Every topic in a domain with its word counts, for the Home screen."""
+    # one row per word: its topic, and its card's stage (None if not started yet)
+    rows = (
+        db.query(VocabularyItem.topic, SrsCard.stage)
+        .outerjoin(
+            SrsCard,
+            and_(
+                SrsCard.vocabulary_item_id == VocabularyItem.id,
+                SrsCard.user_id == user_id,
+            ),
+        )
+        .filter(
+            VocabularyItem.domain_id == domain_id,
+            VocabularyItem.topic.isnot(None),
+        )
+        .all()
+    )
+
+    topics = {}
+    for topic, stage in rows:
+        if topic not in topics:
+            topics[topic] = {
+                "topic": topic,
+                "total_words": 0,
+                "learning": 0,
+                "known": 0,
+            }
+        topics[topic]["total_words"] += 1
+        if stage == "flashcard":
+            topics[topic]["learning"] += 1
+        elif stage == "exercise":
+            topics[topic]["known"] += 1
+
+    return sorted(topics.values(), key=lambda t: t["topic"])
 
 
 # ---------- User ----------

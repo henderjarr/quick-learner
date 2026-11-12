@@ -1,40 +1,33 @@
 import { useState } from "react";
 import ExerciseScreen from "./components/ExerciseScreen";
-import type { Screen } from "./types";
 import FlashcardScreen from "./components/FlashcardScreen";
 import HomeScreen from "./components/HomeScreen";
-import SummaryScreen from "./components/SummaryScreen";
+import NavBar from "./components/NavBar";
+import type { Screen } from "./types";
 
 function App() {
   const [screen, setScreen] = useState<Screen>("home");
-  const [learnedWords, setLearnedWords] = useState<string[]>([]);
+  // null = all topics, in the recommended order
+  const [topic, setTopic] = useState<string | null>(null);
 
-  function startSession() {
-    setLearnedWords([]);
+  function startFlashcards(nextTopic: string | null) {
+    setTopic(nextTopic);
     setScreen("flashcards");
   }
 
   return (
     <>
-      <h1>Quick Learner</h1>
-      {screen === "home" && <HomeScreen onStart={startSession} />}
+      <header className="app-header">
+        <span className="brand">Quick Learner</span>
+      </header>
 
-      {screen === "flashcards" && (
-        <FlashcardScreen
-          onFinish={() => setScreen("exercise")}
-          onLearned={(term) => setLearnedWords([...learnedWords, term])}
-        />
-      )}
-      {screen === "exercise" && (
-        <ExerciseScreen onFinish={() => setScreen("summary")} />
-      )}
+      <NavBar current={screen} onNavigate={setScreen} />
 
-      {screen === "summary" && (
-        <SummaryScreen
-          onHome={() => setScreen("home")}
-          learnedWords={learnedWords}
-        />
-      )}
+      <main>
+        {screen === "home" && <HomeScreen onStart={startFlashcards} />}
+        {screen === "flashcards" && <FlashcardScreen topic={topic} />}
+        {screen === "exercise" && <ExerciseScreen />}
+      </main>
     </>
   );
 }
