@@ -1,6 +1,6 @@
 # backend/main.py
-from typing import List, Optional
-from fastapi import FastAPI, Depends, HTTPException
+from typing import Annotated, List, Optional
+from fastapi import FastAPI, Depends, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
 from sqlalchemy.orm import Session
 
@@ -9,6 +9,7 @@ from schemas import (
     VocabularyItemOut,
     AnswerSubmit,
     AnswerResult,
+    ExerciseOut,
     FlashcardReviewResult,
     FlashcardReviewSubmit,
     ProgressOut,
@@ -53,18 +54,29 @@ def read_vocabulary(domain_id: int, db: Session = Depends(get_db)):
 # add to main.py
 
 
-@app.post("/exercises/generate")
-def generate_exercise(user_id: int, domain_id: int, db: Session = Depends(get_db)):
+@app.post("/exercises/generate", response_model=ExerciseOut)
+def generate_exercise(
+    user_id: int,
+    domain_id: int,
+    # ids of words skipped this visit: ?exclude=12&exclude=40
+    exclude: Annotated[List[int], Query()] = [],
+    db: Session = Depends(get_db),
+):
     domain = data_manager.get_domain_by_id(db, domain_id)
     if not domain:
         raise HTTPException(status_code=404, detail="Domain not found")
 
-    due_items = data_manager.get_due_vocabulary_items_for_user(db, user_id)
+    due_items = data_manager.get_due_vocabulary_items_for_user(
+        db, user_id, exclude_ids=exclude
+    )
 
     if not due_items:
-        raise HTTPException(
-            status_code=404, detail="No new words left to learn in this domain"
-        )
+        raise HTTPException(status_code=404, detail="Do some flashcards first")
+
+    # a saved sentence for the target word that isn't solved yet? reuse it, no AI call
+    saved = data_manager.find_open_exercise(db, user_id, domain_id, due_items[0].id)
+    if saved:
+        return saved
 
     try:
         exercise_data = ai_service.generate_exercise_from_words(

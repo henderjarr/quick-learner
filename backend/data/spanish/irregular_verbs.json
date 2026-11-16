@@ -1,0 +1,45 @@
+{
+  "tense": "present",
+  "persons": [
+    "yo",
+    "tú",
+    "él/ella/usted",
+    "nosotros",
+    "vosotros",
+    "ellos/ellas/ustedes"
+  ],
+  "verbs": {
+    "ser": ["soy", "eres", "es", "somos", "sois", "son"],
+    "estar": ["estoy", "estás", "está", "estamos", "estáis", "están"],
+    "tener": ["tengo", "tienes", "tiene", "tenemos", "tenéis", "tienen"],
+    "ir": ["voy", "vas", "va", "vamos", "vais", "van"],
+    "irse": ["me voy", "te vas", "se va", "nos vamos", "os vais", "se van"],
+    "decir": ["digo", "dices", "dice", "decimos", "decís", "dicen"],
+    "venir": ["vengo", "vienes", "viene", "venimos", "venís", "vienen"],
+    "hacer": ["hago", "haces", "hace", "hacemos", "hacéis", "hacen"],
+    "saber": ["sé", "sabes", "sabe", "sabemos", "sabéis", "saben"],
+    "ver": ["veo", "ves", "ve", "vemos", "veis", "ven"],
+    "salir": ["salgo", "sales", "sale", "salimos", "salís", "salen"],
+    "dar": ["doy", "das", "da", "damos", "dais", "dan"],
+    "conocer": [
+      "conozco",
+      "conoces",
+      "conoce",
+      "conocemos",
+      "conocéis",
+      "conocen"
+    ],
+    "poner": ["pongo", "pones", "pone", "ponemos", "ponéis", "ponen"],
+    "conducir": [
+      "conduzco",
+      "conduces",
+      "conduce",
+      "conducimos",
+      "conducís",
+      "conducen"
+    ],
+    "coger": ["cojo", "coges", "coge", "cogemos", "cogéis", "cogen"],
+    "traer": ["traigo", "traes", "trae", "traemos", "traéis", "traen"],
+    "enviar": ["envío", "envías", "envía", "enviamos", "enviáis", "envían"]
+  }
+}

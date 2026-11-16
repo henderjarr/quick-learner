@@ -20,6 +20,17 @@ class VocabularyItemOut(BaseModel):
     topic: Optional[str] = None
 
 
+# what the client gets when an exercise is handed out.
+# correct_answer is NOT listed, so FastAPI leaves it out of the response.
+class ExerciseOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    id: int
+    type: str
+    prompt: str
+    vocabulary_item_id: Optional[int] = None  # the target word (needed for skipping)
+
+
 # what the client sends when answering an exercise
 class AnswerSubmit(BaseModel):
     user_id: int

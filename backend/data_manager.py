@@ -76,14 +76,23 @@ def create_vocabulary_item(
 
 
 def get_due_vocabulary_items_for_user(
-    db: Session, user_id: int, stage: str = "exercise", limit: int = 3
+    db: Session,
+    user_id: int,
+    stage: str = "exercise",
+    limit: int = 3,
+    exclude_ids=None,
 ):
-    due_cards = get_due_cards_for_user(db, user_id, stage)
+    """Due words, most overdue first. Words in exclude_ids (skipped this visit) are left out."""
+    exclude_ids = exclude_ids or []  # None becomes an empty list
     items = []
-    for card in due_cards[:limit]:
+    for card in get_due_cards_for_user(db, user_id, stage):
+        if card.vocabulary_item_id in exclude_ids:
+            continue  # skipped this visit, move on to the next card
         item = get_vocabulary_item_by_id(db, card.vocabulary_item_id)
         if item:
             items.append(item)
+        if len(items) == limit:
+            break  # we have enough words
     return items
 
 
@@ -140,6 +149,31 @@ def create_exercise(
 
 def get_exercise_by_id(db: Session, exercise_id: int):
     return db.query(Exercise).filter(Exercise.id == exercise_id).first()
+
+
+def find_open_exercise(
+    db: Session, user_id: int, domain_id: int, vocabulary_item_id: int
+):
+    """
+    A saved exercise for this word that the user has NOT answered correctly yet
+    (skipped, or answered wrong). Returns None if there isn't one.
+    Reusing it means no AI call.
+    """
+    # ids of the exercises this user already got right
+    solved_ids = select(UserExerciseAttempt.exercise_id).where(
+        UserExerciseAttempt.user_id == user_id,
+        UserExerciseAttempt.is_correct.is_(True),
+    )
+    return (
+        db.query(Exercise)
+        .filter(
+            Exercise.domain_id == domain_id,
+            Exercise.vocabulary_item_id == vocabulary_item_id,
+            Exercise.id.not_in(solved_ids),
+        )
+        .order_by(Exercise.id)  # oldest first
+        .first()
+    )
 
 
 # ---------- UserExerciseAttempt ----------
