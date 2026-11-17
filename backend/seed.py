@@ -43,8 +43,8 @@ added = 0
 updated = 0
 
 for path in sorted(DATA_DIR.glob("*.json")):
-    if path.name == "domain.json":
-        continue  # domain info, not a word list
+    if path.name in ("domain.json", "irregular_verbs.json"):
+        continue  # domain info and verb tables, not word lists
     data = json.loads(path.read_text(encoding="utf-8"))
 
     for raw_item in data["items"]:
