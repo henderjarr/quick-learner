@@ -17,8 +17,10 @@
     {"teach_order": 1, "term": "vivir", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to live", "example_sentence": "Vivo en un piso pequeño."},
     {"teach_order": 1, "term": "comer", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to eat / to have lunch", "example_sentence": "Comemos a las dos."},
     {"teach_order": 1, "term": "beber", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to drink", "example_sentence": "¿Qué quieres beber?"},
-    {"teach_order": 1, "term": "necesitar", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to need", "example_sentence": "Necesito ayuda."},
+    {"teach_order": 1, "term": "necesitar", "part_of_speech": "verb", "conjugation_type": "regular", "groups": ["Modal verbs"], "definition": "to need", "example_sentence": "Necesito ayuda."},
     {"teach_order": 1, "term": "saber", "part_of_speech": "verb", "conjugation_type": "irregular_yo", "groups": ["Modal verbs"], "definition": "to know (facts, how to do something)", "example_sentence": "No sé dónde está."},
+    {"teach_order": 1, "term": "deber", "part_of_speech": "verb", "conjugation_type": "regular", "groups": ["Modal verbs"], "definition": "must / should / to owe", "usage_note": "deber + infinitive: debo estudiar = I must study", "example_sentence": "Debo estudiar más."},
+    {"teach_order": 1, "term": "tener que", "item_type": "phrase", "groups": ["Modal verbs"], "definition": "to have to", "usage_note": "tener que + infinitive: tengo que trabajar = I have to work", "example_sentence": "Tengo que trabajar mañana."},
     {"teach_order": 1, "term": "pedir", "part_of_speech": "verb", "conjugation_type": "stem_change_e_i", "definition": "to order / to ask for", "example_sentence": "Pido un café con leche."},
     {"teach_order": 1, "term": "repetir", "part_of_speech": "verb", "conjugation_type": "stem_change_e_i", "definition": "to repeat", "example_sentence": "¿Puede repetir, por favor?"},
 

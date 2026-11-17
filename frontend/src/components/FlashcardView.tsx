@@ -56,6 +56,20 @@ function FlashcardView({ card, direction, onAnswer }: FlashcardViewProps) {
               <p className="flashcard-example">{card.example_sentence}</p>
             )}
 
+            {card.forms.length > 0 && (
+              <table className="conjugation">
+                <caption className="eyebrow">Present tense</caption>
+                <tbody>
+                  {card.forms.map((row) => (
+                    <tr key={row.label}>
+                      <th scope="row">{row.label}</th>
+                      <td>{row.form}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+
             {card.usage_note && (
               <p className="tip">
                 <strong>Tip:</strong> {card.usage_note}

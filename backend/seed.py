@@ -7,8 +7,9 @@ import json
 from pathlib import Path
 
 from database import SessionLocal, engine, Base
-from models import Domain, VocabularyItem, SrsCard, Group, WordGroup
+from models import Domain, VocabularyItem, SrsCard, Group, WordGroup, Form
 import data_manager
+import conjugation
 
 DATA_DIR = Path(__file__).parent / "data" / "spanish"
 STARTER_WORDS = 10  # how many SRS cards a brand-new learner starts with
@@ -154,7 +155,25 @@ for _, name, item in memberships:
 db.commit()
 print(f"Groups: {len(groups)} groups, {len(memberships)} word links.")
 
-# 5. Default learner, plus starter cards if they don't have any yet
+# 5. Present-tense tables (conjugation.py), rebuilt from scratch every run
+item_ids = [item.id for item in existing.values()]
+db.query(Form).filter(
+    Form.vocabulary_item_id.in_(item_ids), Form.form_type == "present"
+).delete(synchronize_session=False)
+tables = 0
+for item in existing.values():
+    if item.part_of_speech != "verb" and item.item_type != "phrase":
+        continue
+    rows = conjugation.present_tense(item.term, item.conjugation_type)
+    if rows:
+        for label, form in rows:
+            db.add(Form(vocabulary_item_id=item.id, form_type="present",
+                        label=label, form=form))
+        tables += 1
+db.commit()
+print(f"Conjugation: {tables} present-tense tables.")
+
+# 6. Default learner, plus starter cards if they don't have any yet
 user = data_manager.get_or_create_default_user(db)
 card_count = db.query(SrsCard).filter(SrsCard.user_id == user.id).count()
 if card_count == 0:

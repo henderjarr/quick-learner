@@ -1,8 +1,16 @@
 # pydantic schemas for the User and Question models
 
-from typing import Optional
+from typing import List, Optional
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict
+
+
+# one row of a conjugation table: ("yo", "hablo")
+class FormOut(BaseModel):
+    model_config = ConfigDict(from_attributes=True)
+
+    label: str
+    form: str
 
 
 class VocabularyItemOut(BaseModel):
@@ -18,6 +26,7 @@ class VocabularyItemOut(BaseModel):
     article: Optional[str] = None  # nouns: "el", "la"
     gender: Optional[str] = None  # nouns: "m", "f"
     topic: Optional[str] = None
+    forms: List[FormOut] = []  # verbs: the present-tense table (empty for other words)
 
 
 # what the client gets when an exercise is handed out.

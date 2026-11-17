@@ -503,6 +503,37 @@ button:disabled {
   color: var(--text-soft);
 }
 
+/* present-tense table on the back of verb cards */
+.conjugation {
+  width: 100%;
+  max-width: 360px;
+  margin-top: 4px;
+  border-collapse: collapse; /* one line between rows, not two */
+  font-size: 15px;
+  text-align: left;
+}
+
+.conjugation caption {
+  text-align: left;
+  padding-bottom: 6px;
+}
+
+.conjugation th {
+  width: 55%;
+  padding: 6px 0;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.conjugation td {
+  padding: 6px 0;
+  font-weight: 600;
+}
+
+.conjugation tr + tr {
+  border-top: 1px solid var(--border);
+}
+
 .tip {
   width: 100%;
   margin-top: 4px;

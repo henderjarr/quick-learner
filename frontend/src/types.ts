@@ -24,6 +24,13 @@ export type Flashcard = {
   article: string | null;
   gender: string | null;
   topic: string | null;
+  forms: ConjugationRow[]; // verbs: present tense; empty for other words
+};
+
+// one row of a conjugation table: { label: "yo", form: "hablo" }
+export type ConjugationRow = {
+  label: string;
+  form: string;
 };
 
 // which side of the card shows first

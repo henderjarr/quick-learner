@@ -92,6 +92,8 @@ class VocabularyItem(Base):
 
     # lets you access vocab_item.domain in Python (not a real column)
     domain = relationship("Domain")
+    # vocab_item.forms = this word's conjugation rows, in the order they were added
+    forms = relationship("Form", order_by="Form.id")
 
 
 # -------------------------------------------------
@@ -235,3 +237,23 @@ class WordGroup(Base):
     id = Column(Integer, primary_key=True, index=True)
     group_id = Column(Integer, ForeignKey("groups.id"), index=True)
     vocabulary_item_id = Column(Integer, ForeignKey("vocabulary_items.id"), index=True)
+
+
+# -------------------------------------------------
+# forms: one row per form of a word, e.g. (hablar, "present", "yo", "hablo").
+# General on purpose: past tenses or German articles later are just more rows.
+
+
+class Form(Base):
+    """One form of a word, e.g. the "yo" form of hablar in the present tense."""
+
+    __tablename__ = "forms"
+
+    id = Column(Integer, primary_key=True, index=True)
+    vocabulary_item_id = Column(Integer, ForeignKey("vocabulary_items.id"), index=True)
+    # which table the row belongs to, e.g. "present"
+    form_type = Column(String)
+    # the row's label, e.g. "yo" or "nosotros"
+    label = Column(String)
+    # the form itself, e.g. "hablo"
+    form = Column(String)

@@ -42,6 +42,6 @@
     {"teach_order": 3, "term": "aburrido", "feminine_form": "aburrida", "part_of_speech": "adjective", "definition": "boring (with ser) / bored (with estar)", "example_sentence": "La reunión es aburrida."},
 
     {"teach_order": 3, "term": "explicar", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to explain", "example_sentence": "El profesor explica la gramática."},
-    {"teach_order": 3, "term": "enviar", "part_of_speech": "verb", "conjugation_type": "regular", "definition": "to send", "usage_note": "accent in some forms: envío, envías", "example_sentence": "Te envío un correo."}
+    {"teach_order": 3, "term": "enviar", "part_of_speech": "verb", "conjugation_type": "irregular", "definition": "to send", "usage_note": "accent in some forms: envío, envías", "example_sentence": "Te envío un correo."}
   ]
 }
