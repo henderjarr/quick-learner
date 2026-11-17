@@ -2,8 +2,8 @@ import type {
   AnswerResult,
   Exercise,
   Flashcard,
+  Group,
   Progress,
-  Topic,
 } from "./types";
 
 const API_URL = "http://localhost:8000";
@@ -66,16 +66,13 @@ export async function submitAnswer(
   return response.json();
 }
 
-export async function getDueFlashcards(
-  known = false,
-  topic?: string,
-): Promise<Flashcard[]> {
+// the learning path pile (known = true: every word already moved to practice)
+export async function getDueFlashcards(known = false): Promise<Flashcard[]> {
   const params = new URLSearchParams({
     user_id: String(USER_ID),
     domain_id: String(DOMAIN_ID),
   });
   if (known) params.set("known", "true");
-  if (topic) params.set("topic", topic);
 
   const response = await fetch(`${API_URL}/flashcards/due?${params}`);
 
@@ -85,12 +82,11 @@ export async function getDueFlashcards(
 }
 
 // starts 10 new words and returns them; an empty list = none left
-export async function dealMoreCards(topic?: string): Promise<Flashcard[]> {
+export async function dealMoreCards(): Promise<Flashcard[]> {
   const params = new URLSearchParams({
     user_id: String(USER_ID),
     domain_id: String(DOMAIN_ID),
   });
-  if (topic) params.set("topic", topic);
 
   const response = await fetch(`${API_URL}/flashcards/deal?${params}`, {
     method: "POST",
@@ -127,12 +123,18 @@ export async function getProgress(): Promise<Progress> {
   return response.json();
 }
 
-export async function getTopics(): Promise<Topic[]> {
-  const params = new URLSearchParams({
-    user_id: String(USER_ID),
-    domain_id: String(DOMAIN_ID),
-  });
-  const response = await fetch(`${API_URL}/topics?${params}`);
+// every list (topics and grammar groups) with its word count
+export async function getGroups(): Promise<Group[]> {
+  const response = await fetch(`${API_URL}/groups?domain_id=${DOMAIN_ID}`);
+
+  await throwIfNotOk(response);
+
+  return response.json();
+}
+
+// every word in one list, for practice mode
+export async function getGroupWords(groupId: number): Promise<Flashcard[]> {
+  const response = await fetch(`${API_URL}/groups/${groupId}/words`);
 
   await throwIfNotOk(response);
 

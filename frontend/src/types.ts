@@ -38,9 +38,10 @@ export type Progress = {
   total_words: number;
 };
 
-export type Topic = {
-  topic: string;
-  total_words: number;
-  learning: number;
-  known: number;
+// a list of words: a topic ("Food and drink") or a grammar group ("Conjunctions")
+export type Group = {
+  id: number;
+  name: string;
+  kind: "topic" | "grammar";
+  word_count: number;
 };

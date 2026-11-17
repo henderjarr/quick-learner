@@ -1,224 +1,89 @@
 import { useEffect, useState } from "react";
-import FlashcardView from "./FlashcardView";
-import { formatTopic } from "../format";
-import { dealMoreCards, getDueFlashcards, reviewFlashcard } from "../api";
-import type { Direction, Flashcard } from "../types";
+import LearningPile from "./LearningPile";
+import ListSelect from "./ListSelect";
+import PracticeList from "./PracticeList";
+import { getGroups } from "../api";
+import type { Direction, Group } from "../types";
 
-type Mode = "new" | "known";
 type FlashcardScreenProps = {
-  topic: string | null;
+  groupId: number | null; // null = the learning path
+  onGroupChange: (groupId: number | null) => void; // the choice lives in App
 };
 
-function FlashcardScreen({ topic }: FlashcardScreenProps) {
-  const [mode, setMode] = useState<Mode>("new");
+// the parent: title, list dropdown, direction toggle.
+// It shows the learning path OR one practice list; each child keeps its own state.
+function FlashcardScreen({ groupId, onGroupChange }: FlashcardScreenProps) {
   const [direction, setDirection] = useState<Direction>("term");
-  const [cards, setCards] = useState<Flashcard[]>([]);
-  const [total, setTotal] = useState(0); // how many cards we started with
-  const [reviewCount, setReviewCount] = useState(0);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  const [dealing, setDealing] = useState(false); // true while "Deal 10 more" runs
-  const [notice, setNotice] = useState<string | null>(null); // e.g. "No new words left"
+  const [groups, setGroups] = useState<Group[]>([]);
 
-  // load the cards when the screen appears, and again whenever the mode changes
+  // the lists for the dropdown: load once
   useEffect(() => {
     let ignore = false;
-
-    async function load() {
-      try {
-        const data = await getDueFlashcards(
-          mode === "known",
-          topic ?? undefined,
-        );
-        if (!ignore) {
-          setCards(data);
-          setTotal(data.length);
-        }
-      } catch (err) {
-        if (!ignore) {
-          setError(err instanceof Error ? err.message : "Something went wrong");
-        }
-      } finally {
-        if (!ignore) setLoading(false);
-      }
-    }
-
-    load();
+    getGroups()
+      .then((data) => {
+        if (!ignore) setGroups(data);
+      })
+      .catch(() => {
+        // the dropdown still works with just the learning path
+      });
     return () => {
       ignore = true;
     };
-  }, [mode, topic]);
-
-  function changeMode(next: Mode) {
-    if (next === mode) return;
-    // clear the old pile, then the effect above loads the new one
-    setCards([]);
-    setTotal(0);
-    setError(null);
-    setNotice(null);
-    setLoading(true);
-    setMode(next);
-  }
-
-  async function handleDeal() {
-    setDealing(true);
-    setError(null);
-    setNotice(null);
-    try {
-      const newCards = await dealMoreCards(topic ?? undefined);
-      if (newCards.length === 0) {
-        setNotice("No new words left in this topic.");
-      } else {
-        // add to the end of the pile; total grows so the progress bar stays honest
-        setCards([...cards, ...newCards]);
-        setTotal(total + newCards.length);
-      }
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
-    } finally {
-      setDealing(false);
-    }
-  }
-
-  async function handleFlashcardAnswer(knewIt: boolean) {
-    const card = cards[0];
-    const rest = cards.slice(1);
-    setError(null);
-    try {
-      if (mode === "known") {
-        // "Got it" changes nothing. "Still learning" moves the word
-        // back to the flashcard pile. Either way, on to the next card.
-        if (!knewIt) await reviewFlashcard(card.id, false);
-        setCards(rest);
-      } else {
-        await reviewFlashcard(card.id, knewIt);
-        // "Still learning" goes to the back of the pile and comes round again
-        setCards(knewIt ? rest : [...rest, card]);
-      }
-      setReviewCount(reviewCount + 1);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
-    }
-  }
-
-  // derived values: calculated from state, not stored in state
-  const learned = total - cards.length;
-  const percent = total > 0 ? Math.round((learned / total) * 100) : 0;
-  const finished = !loading && !error && cards.length === 0;
+  }, []);
 
   return (
-    <section className="screen">
-      <div className="screen-header">
-        <h2>{topic ? formatTopic(topic) : "All topics"}</h2>
-        {cards.length > 0 && (
-          <span className="muted small">{cards.length} cards left</span>
-        )}
+    <>
+      <div className="page-header">
+        <h1>Flashcards</h1>
       </div>
 
-      <div className="toggles">
-        <div className="toggle">
-          <button
-            className={mode === "new" ? "active" : ""}
-            aria-pressed={mode === "new"}
-            onClick={() => changeMode("new")}
-          >
-            New words
-          </button>
-          <button
-            className={mode === "known" ? "active" : ""}
-            aria-pressed={mode === "known"}
-            onClick={() => changeMode("known")}
-          >
-            Known words
-          </button>
+      <div className="controls">
+        <div className="field field-grow">
+          <label htmlFor="fc-list" className="field-label">
+            List
+          </label>
+          <ListSelect
+            id="fc-list"
+            groups={groups}
+            value={groupId}
+            onChange={onGroupChange}
+          />
         </div>
 
-        <div className="toggle">
-          <button
-            className={direction === "term" ? "active" : ""}
-            aria-pressed={direction === "term"}
-            onClick={() => setDirection("term")}
+        <div className="field">
+          <span id="fc-direction" className="field-label">
+            Show first
+          </span>
+          <div
+            className="segmented"
+            role="group"
+            aria-labelledby="fc-direction"
           >
-            Spanish first
-          </button>
-          <button
-            className={direction === "meaning" ? "active" : ""}
-            aria-pressed={direction === "meaning"}
-            onClick={() => setDirection("meaning")}
-          >
-            English first
-          </button>
-        </div>
-      </div>
-
-      {mode === "new" && total > 0 && (
-        <div>
-          <div className="progress">
-            <div className="progress-fill" style={{ width: `${percent}%` }} />
+            <button
+              className={direction === "term" ? "active" : ""}
+              aria-pressed={direction === "term"}
+              onClick={() => setDirection("term")}
+            >
+              Spanish
+            </button>
+            <button
+              className={direction === "meaning" ? "active" : ""}
+              aria-pressed={direction === "meaning"}
+              onClick={() => setDirection("meaning")}
+            >
+              English
+            </button>
           </div>
-          <p className="muted small">
-            {learned} of {total} moved to practice
-          </p>
         </div>
-      )}
+      </div>
 
-      {mode === "known" && cards.length > 0 && (
-        <p className="muted small">
-          Card {learned + 1} of {total}
-        </p>
+      {/* key={groupId}: switching lists gives a fresh PracticeList (index back to 0) */}
+      {groupId === null ? (
+        <LearningPile direction={direction} />
+      ) : (
+        <PracticeList key={groupId} groupId={groupId} direction={direction} />
       )}
-
-      {loading && <p className="muted">Loading your cards…</p>}
-      {error && <p className="error">{error}</p>}
-
-      {cards.length > 0 && (
-        <FlashcardView
-          key={reviewCount}
-          card={cards[0]}
-          direction={direction}
-          onAnswer={handleFlashcardAnswer}
-        />
-      )}
-
-      {finished && mode === "new" && (
-        <div className="card flashcard">
-          <h2>{total > 0 ? "All cards done!" : "No new words left"}</h2>
-          <p className="muted">
-            {total > 0
-              ? "These words are ready to practise in sentences. Open the Practise tab when you like."
-              : "You have started every word here. Review your known words, or practise them in sentences."}
-          </p>
-        </div>
-      )}
-
-      {mode === "new" && !loading && (
-        <div className="deal-row">
-          <button onClick={handleDeal} disabled={dealing}>
-            {dealing ? "Dealing…" : "Deal 10 more"}
-          </button>
-          {notice && <p className="muted small">{notice}</p>}
-        </div>
-      )}
-
-      {finished && mode === "known" && total > 0 && (
-        <div className="card flashcard">
-          <h2>That's all of them!</h2>
-          <p className="muted">You have been through every known word.</p>
-        </div>
-      )}
-
-      {finished && mode === "known" && total === 0 && (
-        <div className="card flashcard">
-          <h2>No known words yet</h2>
-          <p className="muted">
-            Learn a few first, then come back to review them.
-          </p>
-          <button className="btn-primary" onClick={() => changeMode("new")}>
-            Show new words
-          </button>
-        </div>
-      )}
-    </section>
+    </>
   );
 }
 

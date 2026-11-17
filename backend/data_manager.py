@@ -11,6 +11,8 @@ from models import (
     SrsCard,
     User,
     FlashcardReview,
+    Group,
+    WordGroup,
 )
 
 # ---------- Domain ----------
@@ -374,41 +376,35 @@ def get_progress(db: Session, user_id: int, domain_id: int):
     }
 
 
-def get_topics(db: Session, user_id: int, domain_id: int):
-    """Every topic in a domain with its word counts, for the Home screen."""
-    # one row per word: its topic, and its card's stage (None if not started yet)
+# ---------- Groups ----------
+
+
+def get_groups(db: Session, domain_id: int):
+    """Every group in a domain with its word count, sorted by name (for the dropdown)."""
+    # join each group to its links and count them; groups with no words drop out
     rows = (
-        db.query(VocabularyItem.topic, SrsCard.stage)
-        .outerjoin(
-            SrsCard,
-            and_(
-                SrsCard.vocabulary_item_id == VocabularyItem.id,
-                SrsCard.user_id == user_id,
-            ),
-        )
-        .filter(
-            VocabularyItem.domain_id == domain_id,
-            VocabularyItem.topic.isnot(None),
-        )
+        db.query(Group, func.count(WordGroup.id))
+        .join(WordGroup, WordGroup.group_id == Group.id)
+        .filter(Group.domain_id == domain_id)
+        .group_by(Group.id)
+        .order_by(Group.name)
         .all()
     )
+    return [
+        {"id": group.id, "name": group.name, "kind": group.kind, "word_count": count}
+        for group, count in rows
+    ]
 
-    topics = {}
-    for topic, stage in rows:
-        if topic not in topics:
-            topics[topic] = {
-                "topic": topic,
-                "total_words": 0,
-                "learning": 0,
-                "known": 0,
-            }
-        topics[topic]["total_words"] += 1
-        if stage == "flashcard":
-            topics[topic]["learning"] += 1
-        elif stage == "exercise":
-            topics[topic]["known"] += 1
 
-    return sorted(topics.values(), key=lambda t: t["topic"])
+def get_group_words(db: Session, group_id: int):
+    """Every word in one group, in teaching order (for practice mode)."""
+    return (
+        db.query(VocabularyItem)
+        .join(WordGroup, WordGroup.vocabulary_item_id == VocabularyItem.id)
+        .filter(WordGroup.group_id == group_id)
+        .order_by(VocabularyItem.teach_order, VocabularyItem.term)
+        .all()
+    )
 
 
 # ---------- User ----------

@@ -17,6 +17,21 @@ function formatReviewDate(isoString: string): string {
   });
 }
 
+// "Bebo un ___ (coffee)." -> the ___ is drawn as a line
+function Sentence({ text }: { text: string }) {
+  const parts = text.split("___");
+  if (parts.length !== 2) return <>{text}</>; // no blank (or several): plain text
+  return (
+    <>
+      {parts[0]}
+      <span className="blank">
+        <span className="sr-only">blank</span>
+      </span>
+      {parts[1]}
+    </>
+  );
+}
+
 function ExerciseScreen({ onGoToFlashcards }: ExerciseScreenProps) {
   const [exercise, setExercise] = useState<Exercise | null>(null);
   const [answer, setAnswer] = useState("");
@@ -93,9 +108,9 @@ function ExerciseScreen({ onGoToFlashcards }: ExerciseScreenProps) {
   const nothingReady = !loading && !error && exercise === null;
 
   return (
-    <section className="screen">
-      <div className="screen-header">
-        <h2>Practise</h2>
+    <>
+      <div className="page-header">
+        <h1>Practise</h1>
         {skipped.length > 0 && (
           <span className="muted small">{skipped.length} skipped</span>
         )}
@@ -105,59 +120,67 @@ function ExerciseScreen({ onGoToFlashcards }: ExerciseScreenProps) {
       {error && <p className="error">{error}</p>}
 
       {exercise && (
-        <div className="card">
-          <p className="exercise-prompt">{exercise.prompt}</p>
+        <article className="card exercise" aria-label="Exercise">
+          <div className="exercise-head">
+            <span className="eyebrow">Fill in the blank</span>
+            <p className="exercise-prompt">
+              <Sentence text={exercise.prompt} />
+            </p>
+          </div>
 
           <form
-            className="exercise-form"
+            className="field"
             onSubmit={(e) => {
               e.preventDefault();
               handleSubmit();
             }}
           >
-            <input
-              className="exercise-input"
-              value={answer}
-              onChange={(e) => setAnswer(e.target.value)}
-              placeholder="Type the missing word"
-              disabled={result !== null}
-              autoFocus
-            />
-            {result === null ? (
-              <>
-                <button
-                  type="submit"
-                  className="btn-primary"
-                  disabled={checking || answer.trim() === ""}
-                >
-                  Check
-                </button>
-                <button type="button" onClick={handleSkip} disabled={checking}>
-                  Skip
-                </button>
-              </>
-            ) : (
-              <button type="button" className="btn-primary" onClick={handleNext}>
-                Next
-              </button>
-            )}
+            <label htmlFor="ex-answer" className="field-label">
+              Your answer
+            </label>
+            <div className="answer-row">
+              <input
+                id="ex-answer"
+                className="exercise-input"
+                value={answer}
+                onChange={(e) => setAnswer(e.target.value)}
+                placeholder="Type the missing word"
+                disabled={result !== null}
+                autoComplete="off"
+                autoFocus
+              />
+              {result === null && (
+                <>
+                  <button
+                    type="submit"
+                    className="btn-primary"
+                    disabled={checking || answer.trim() === ""}
+                  >
+                    Check
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSkip}
+                    disabled={checking}
+                  >
+                    Skip
+                  </button>
+                </>
+              )}
+            </div>
           </form>
 
-          {checking && <p className="muted">Your tutor is reading your answer…</p>}
+          {checking && (
+            <p className="muted">Your tutor is reading your answer…</p>
+          )}
 
           {result && (
-            <div
-              className={
-                result.is_correct
-                  ? "exercise-result correct"
-                  : "exercise-result learning"
-              }
-            >
-              <p className="exercise-verdict">
+            <div className={result.is_correct ? "result correct" : "result learning"}>
+              <p className="result-title">
                 {result.is_correct ? "Correct!" : "Still learning"}
               </p>
               <p>
-                Answer: <strong>{result.correct_answer}</strong>
+                The answer is <strong>{result.correct_answer}</strong>.
               </p>
               {result.next_review_at && (
                 <p className="muted small">
@@ -168,23 +191,36 @@ function ExerciseScreen({ onGoToFlashcards }: ExerciseScreenProps) {
           )}
 
           {result?.ai_feedback && (
-            <div className="tutor-panel">
-              <p className="tutor-label">Graded by code, explained by AI</p>
+            <section className="tutor" aria-label="AI tutor">
+              <div className="tutor-head">
+                <span className="eyebrow">AI tutor</span>
+                <span className="muted small">
+                  Graded by code, explained by AI
+                </span>
+              </div>
               <p>{result.ai_feedback}</p>
+            </section>
+          )}
+
+          {result && (
+            <div className="card-footer">
+              <button className="btn-primary" onClick={handleNext}>
+                Next sentence
+              </button>
             </div>
           )}
-        </div>
+        </article>
       )}
 
       {nothingReady && (
-        <div className="card">
+        <div className="card message-card">
           <h2>Nothing to practise right now</h2>
           <p className="muted">
             {skipped.length > 0
               ? "You skipped the rest. Try them again, or learn some new words."
               : "Words appear here after you mark them “Got it” on Flashcards."}
           </p>
-          <div className="exercise-actions">
+          <div className="centered-row">
             {skipped.length > 0 && (
               <button className="btn-primary" onClick={handleRetrySkipped}>
                 Try the skipped ones again
@@ -199,7 +235,7 @@ function ExerciseScreen({ onGoToFlashcards }: ExerciseScreenProps) {
           </div>
         </div>
       )}
-    </section>
+    </>
   );
 }
 

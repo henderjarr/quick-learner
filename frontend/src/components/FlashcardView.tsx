@@ -4,7 +4,8 @@ import type { Direction, Flashcard } from "../types";
 type FlashcardViewProps = {
   card: Flashcard;
   direction: Direction;
-  onAnswer: (knewIt: boolean) => void;
+  // optional: without it (practice mode) the card has no Still learning / Got it
+  onAnswer?: (knewIt: boolean) => void;
 };
 
 // the database stores "m" / "f" / "n"; the card writes it out
@@ -23,49 +24,58 @@ function FlashcardView({ card, direction, onAnswer }: FlashcardViewProps) {
   const genderName = card.gender ? genderNames[card.gender] : null;
 
   return (
-    <div className="card flashcard">
-      {card.part_of_speech && (
-        <span className="type-label">{card.part_of_speech}</span>
-      )}
-
+    <article className="card flashcard" aria-label="Flashcard">
       {/* front: the bare word, or its meaning, depending on the direction */}
-      <h2 className="flashcard-term">
-        {termFirst ? card.term : card.definition}
-      </h2>
+      <div className="flashcard-front">
+        {card.part_of_speech && (
+          <span className="eyebrow">{card.part_of_speech}</span>
+        )}
+        <h2 className="flashcard-term">
+          {termFirst ? card.term : card.definition}
+        </h2>
+      </div>
 
       {!flipped ? (
-        <button onClick={() => setFlipped(true)}>Show answer</button>
+        <div className="flashcard-reveal">
+          <button onClick={() => setFlipped(true)}>Show answer</button>
+        </div>
       ) : (
         <>
-          <p className="flashcard-meaning">
-            {termFirst ? card.definition : fullTerm}
-          </p>
-
-          {genderName && (
-            <p className="muted small">
-              {termFirst ? `${fullTerm} · ${genderName}` : genderName}
+          <div className="flashcard-back">
+            <p className="flashcard-meaning">
+              {termFirst ? card.definition : fullTerm}
             </p>
-          )}
 
-          {card.example_sentence && (
-            <p className="flashcard-example">{card.example_sentence}</p>
-          )}
+            {genderName && (
+              <p className="muted">
+                {termFirst ? `${fullTerm} · ${genderName}` : genderName}
+              </p>
+            )}
 
-          {card.usage_note && (
-            <p className="muted small">Tip: {card.usage_note}</p>
-          )}
+            {card.example_sentence && (
+              <p className="flashcard-example">{card.example_sentence}</p>
+            )}
 
-          <div className="button-row">
-            <button className="btn-learning" onClick={() => onAnswer(false)}>
-              Still learning
-            </button>
-            <button className="btn-primary" onClick={() => onAnswer(true)}>
-              Got it
-            </button>
+            {card.usage_note && (
+              <p className="tip">
+                <strong>Tip:</strong> {card.usage_note}
+              </p>
+            )}
           </div>
+
+          {onAnswer && (
+            <div className="flashcard-actions">
+              <button className="btn-learning" onClick={() => onAnswer(false)}>
+                Still learning
+              </button>
+              <button className="btn-primary" onClick={() => onAnswer(true)}>
+                Got it
+              </button>
+            </div>
+          )}
         </>
       )}
-    </div>
+    </article>
   );
 }
 

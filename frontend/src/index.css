@@ -1,19 +1,22 @@
-/* ---------- Design tokens (from the mockup) ---------- */
+/* ---------- Design tokens ---------- */
 :root {
-  --bg: #f5f7fa;
+  --bg: #f6f7f9;
   --surface: #ffffff;
-  --text: #1b1f24;
-  --text-muted: #4b5563;
-  --border: #d1d5db;
+  --text: #111827;
+  --text-soft: #374151; /* body copy inside cards */
+  --text-muted: #5b6472; /* labels, counts */
+  --border: #e4e7ec; /* card edges, dividers */
+  --border-strong: #d0d5dd; /* inputs and outlined buttons */
 
   --blue: #2563eb;
   --blue-dark: #1d4ed8;
-  --blue-soft: #eff4ff;
+  --blue-soft: #eef3fe;
   --orange: #c2410c;
+  --orange-dark: #9a3412;
   --orange-soft: #fff4ec;
 
   --radius: 12px;
-  --shadow: 0 1px 3px rgba(17, 24, 39, 0.08);
+  --radius-lg: 16px;
 
   --font-body: "Inter", system-ui, sans-serif;
   --font-heading: "Space Grotesk", "Inter", sans-serif;
@@ -31,63 +34,48 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: var(--font-body);
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1.5;
 }
 
-#root {
-  max-width: 680px;
-  margin: 0 auto;
-  padding: 40px 16px;
-}
-
 h1,
-h2 {
+h2,
+h3 {
   font-family: var(--font-heading);
   line-height: 1.15;
   margin: 0;
 }
 
-p {
+p,
+ol {
   margin: 0; /* spacing comes from the parent's gap instead */
 }
 
+/* one column for everything, header included, so all edges line up */
+.container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
 /* ---------- Buttons ---------- */
+/* every button starts as the outlined (secondary) style */
 button {
   font: inherit;
+  font-size: 15px;
   font-weight: 600;
   min-height: 48px;
   padding: 0 24px;
   border-radius: var(--radius);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-strong);
   background: var(--surface);
   color: var(--text);
   cursor: pointer;
 }
 
 button:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
-}
-
-/* ---------- Shared pieces ---------- */
-.card {
-  background: var(--surface);
-  border-radius: 16px;
-  padding: 32px;
-  box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.muted {
-  color: var(--text-muted);
-}
-
-.error {
-  color: var(--orange);
-  font-weight: 600;
 }
 
 .btn-primary {
@@ -100,139 +88,8 @@ button:disabled {
   background: var(--blue-dark);
 }
 
-.card > button {
-  align-self: flex-start;
-}
-
-/* ---------- Home ---------- */
-.stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
-}
-
-.stat {
-  background: var(--blue-soft);
-  border-radius: var(--radius);
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.stat-number {
-  font-family: var(--font-heading);
-  font-size: 32px;
-  font-weight: 700;
-  color: var(--blue-dark);
-}
-
-.stat-label {
-  font-size: 14px;
-  color: var(--text-muted);
-}
-
-.card > .start-button {
-  align-self: stretch; /* full width, unlike other card buttons */
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  padding: 14px 20px;
-  text-align: left;
-}
-
-.start-title {
-  font-size: 18px;
-}
-
-.start-sub {
-  font-size: 14px;
-  font-weight: 400;
-}
-
-h3 {
-  font-family: var(--font-heading);
-  font-size: 18px;
-  margin: 0 0 8px;
-}
-
-.topic-list {
-  list-style: none; /* no bullet points */
-  margin: 0;
-  padding: 0;
-  background: var(--surface);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  overflow: hidden;
-}
-
-.topic-row {
-  width: 100%;
-  min-height: 56px;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 2px;
-  padding: 10px 16px;
-  border: none;
-  border-bottom: 1px solid #e5e7eb;
-  border-radius: 0;
-  text-align: left;
-  font-weight: 400;
-}
-
-.topic-list li:last-child .topic-row {
-  border-bottom: none;
-}
-
-.topic-row:hover {
-  background: var(--blue-soft);
-}
-
-.topic-name {
-  font-weight: 600;
-}
-
-/* ---------- Flashcards ---------- */
-.flashcard {
-  align-items: center; /* centre the children instead of stretching them */
-  justify-content: center;
-  text-align: center;
-  min-height: 320px;
-}
-
-.flashcard > button {
-  align-self: center; /* undo the Home rule ".card > button" for this card */
-}
-
-.flashcard-term {
-  font-size: 52px;
-}
-
-.flashcard-meaning {
-  font-size: 24px;
-  font-weight: 600;
-}
-
-.flashcard-example {
-  font-style: italic;
-  color: var(--text-muted);
-}
-
-.button-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 12px;
-}
-
-.button-row button {
-  min-width: 160px; /* both answer buttons the same width */
-}
-
 .btn-learning {
-  border: 2px solid var(--orange);
+  border: 1.5px solid var(--orange);
   color: var(--orange);
 }
 
@@ -240,29 +97,184 @@ h3 {
   background: var(--orange-soft);
 }
 
+/* a text-only button for quiet actions ("Deal 10 more") */
+.btn-ghost {
+  min-height: 44px;
+  padding: 0 16px;
+  border: none;
+  background: transparent;
+  color: var(--blue-dark);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-ghost:hover:not(:disabled) {
+  background: var(--blue-soft);
+}
+
+/* ---------- Shared pieces ---------- */
+.page {
+  padding-top: 40px;
+  padding-bottom: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* title on the left, a count on the right */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline; /* line up the text bottoms */
+  gap: 12px;
+}
+
+.page-header h1 {
+  font-size: 32px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.card h2 {
+  font-size: 20px;
+}
+
+/* the actions at the bottom of a card, divided from its content */
+.card-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+/* small uppercase label above a heading ("NOUN", "AI TUTOR") */
+.eyebrow {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.muted {
+  color: var(--text-muted);
+}
+
 .small {
   font-size: 14px;
 }
 
-.screen {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+.error {
+  color: var(--orange);
+  font-weight: 600;
 }
 
-.screen-header {
+/* hidden on screen, still read by screen readers */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* a label with its control underneath */
+.field {
   display: flex;
-  align-items: baseline; /* line up the text bottoms of the title and the count */
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* a row of fields that wraps on narrow screens */
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
   gap: 12px;
 }
 
+.field-grow {
+  flex: 1 1 200px; /* fills the row, never narrower than 200px */
+}
+
+/* dropdown: hide the browser's arrow and draw our own */
+.select-wrap {
+  position: relative;
+}
+
+.select {
+  width: 100%;
+  height: 44px;
+  padding: 0 40px 0 14px;
+  font: inherit;
+  font-size: 15px;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-chevron {
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  pointer-events: none; /* clicks go through to the select */
+  color: var(--text-muted);
+}
+
+/* two joined buttons, one active ("New | Known") */
+.segmented {
+  display: inline-flex;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  overflow: hidden; /* clips the buttons to the rounded corners */
+  background: var(--surface);
+}
+
+.segmented button {
+  min-height: 42px;
+  padding: 0 14px;
+  font-size: 14px;
+  border: none;
+  border-radius: 0;
+  background: var(--surface);
+  color: var(--text-muted);
+}
+
+.segmented button + button {
+  border-left: 1px solid var(--border-strong); /* divider between the two */
+}
+
+.segmented button.active {
+  background: var(--blue-soft);
+  color: var(--blue-dark);
+}
+
 .progress {
-  height: 8px;
-  background: #e5e7eb;
+  height: 6px;
+  background: var(--border);
   border-radius: 999px;
   overflow: hidden; /* clips the fill to the rounded track */
-  margin-bottom: 6px;
 }
 
 .progress-fill {
@@ -272,71 +284,328 @@ h3 {
   transition: width 0.3s; /* the bar slides instead of jumping */
 }
 
-.toggles {
+.progress-block {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ---------- Header + tab bar ---------- */
+.app-header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+  min-height: 64px;
+  display: flex;
+  align-items: center;
   gap: 12px;
 }
 
-.toggle {
-  display: inline-flex;
-  gap: 4px;
-  padding: 4px;
-  background: #e5e7eb;
-  border-radius: var(--radius);
+.brand {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 18px;
 }
 
-.toggle button {
-  min-height: 44px;
-  padding: 0 14px;
+.chip {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--blue-dark);
+  background: var(--blue-soft);
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+/* desktop: text tabs on the right of the header */
+.navbar {
+  margin-left: auto;
+  display: flex;
+  align-self: stretch; /* full header height, so the underline sits on the edge */
+}
+
+.nav-link {
+  min-height: 0;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 2px;
   border: none;
-  border-radius: 8px;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
   background: transparent;
+  color: var(--text-muted);
+}
+
+.nav-link:hover {
+  color: var(--text);
+}
+
+.nav-link.active {
+  color: var(--blue-dark);
+  border-bottom-color: var(--blue);
+}
+
+.nav-icon {
+  display: none; /* icons only on phones */
+}
+
+/* ---------- Home ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.stat + .stat {
+  padding-left: 16px;
+  border-left: 1px solid var(--border);
+}
+
+.stat-number {
+  font-family: var(--font-heading);
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.stat-label,
+.progress-label {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.progress-label-row {
+  display: flex;
+  justify-content: space-between;
   font-size: 14px;
 }
 
-.toggle button.active {
-  background: var(--surface);
-  color: var(--blue-dark);
-  box-shadow: var(--shadow);
+/* icon tile + title + description */
+.card-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
 }
 
-.type-label {
+.card-head-text {
+  flex: 1 1 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.icon-tile {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  border-radius: var(--radius);
+  background: var(--blue-soft);
+  color: var(--blue);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.how-it-works {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.steps {
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.steps li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.steps strong {
+  color: var(--text);
+}
+
+.step-number {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* ---------- Flashcards ---------- */
+.flashcard {
+  padding: 0;
+  gap: 0;
+  overflow: hidden;
+}
+
+.flashcard-front {
+  padding: 32px 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  text-align: center;
+}
+
+.flashcard-term {
+  font-size: 52px;
+  line-height: 1.1;
+}
+
+.flashcard-reveal {
+  padding: 8px 32px 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.flashcard-back {
+  border-top: 1px solid var(--border);
+  padding: 24px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.flashcard-meaning {
+  font-size: 24px;
   font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--blue-dark);
+}
+
+.flashcard-example {
+  font-style: italic;
+  color: var(--text-soft);
+}
+
+.tip {
+  width: 100%;
+  margin-top: 4px;
+  padding: 12px 16px;
+  background: var(--bg);
+  border-radius: 10px;
+  font-size: 14px;
+  color: var(--text-soft);
+  text-align: left;
+}
+
+.flashcard-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr)); /* two equal buttons */
+  gap: 12px;
+  padding: 0 32px 32px;
+}
+
+.flashcard-actions button {
+  min-height: 52px;
+  font-size: 16px;
+}
+
+/* a message card (all done, nothing ready) */
+.message-card {
+  align-items: center;
+  text-align: center;
+  padding: 40px 24px;
+}
+
+.centered-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+}
+
+/* New | Known on the left, "7 cards left" on the right */
+.pile-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Previous on the left, Next on the right */
+.practice-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.practice-nav button {
+  min-width: 140px;
 }
 
 .deal-row {
   display: flex;
   flex-direction: column;
-  align-items: center; /* centred under the card */
-  gap: 8px;
+  align-items: center;
+  gap: 4px;
 }
 
 /* ---------- Practise ---------- */
+.exercise {
+  padding: 32px;
+  gap: 24px;
+}
+
+.exercise-head {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .exercise-prompt {
   font-family: var(--font-heading);
-  font-size: 24px;
+  font-size: 26px;
   line-height: 1.35;
 }
 
-.exercise-form {
+/* the ___ in the sentence, drawn as a line */
+.blank {
+  display: inline-block;
+  min-width: 72px;
+  border-bottom: 2px solid var(--text);
+}
+
+.answer-row {
   display: flex;
-  flex-wrap: wrap; /* buttons drop to a new line on narrow phones */
+  flex-wrap: wrap; /* the buttons drop under the input on phones */
   gap: 12px;
 }
 
 .exercise-input {
-  flex: 1 1 200px; /* grow to fill the row, but never narrower than 200px */
+  flex: 1 1 220px;
   min-height: 48px; /* same height as the buttons */
-  padding: 0 16px;
+  padding: 0 14px;
   font: inherit; /* inputs don't inherit the page font by default */
   color: var(--text);
   background: var(--surface);
-  border: 1px solid var(--border);
+  border: 1px solid var(--border-strong);
   border-radius: var(--radius);
 }
 
@@ -349,124 +618,112 @@ h3 {
   background: var(--bg);
 }
 
-.exercise-result {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
+.result {
   padding: 16px 20px;
   border-radius: var(--radius);
-  border-left: 4px solid;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
-.exercise-result.correct {
+.result.correct {
   background: var(--blue-soft);
-  border-color: var(--blue);
 }
 
-.exercise-result.learning {
+.result.learning {
   background: var(--orange-soft);
-  border-color: var(--orange);
 }
 
-.exercise-verdict {
-  font-size: 18px;
+.result-title {
   font-weight: 700;
 }
 
-.correct .exercise-verdict {
+.correct .result-title {
   color: var(--blue-dark);
 }
 
-.learning .exercise-verdict {
-  color: var(--orange);
+.learning .result-title {
+  color: var(--orange-dark);
 }
 
-.tutor-panel {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.tutor {
   padding: 16px 20px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--text-soft);
 }
 
-.tutor-label {
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.exercise-actions {
+.tutor-head {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-}
-
-/* ---------- Header + tab bar ---------- */
-.app-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between; /* title left, Setup cog right (later) */
-  margin-bottom: 16px;
-}
-
-.brand {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 20px;
-}
-
-/* Phones first: the bar is stuck to the bottom of the screen */
-.navbar {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 10;
-  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
   gap: 8px;
-  padding: 8px 16px;
-  background: var(--surface);
-  border-top: 1px solid var(--border);
 }
 
-#root {
-  padding-bottom: 96px; /* room so the fixed bar never covers content */
-}
-
-.nav-link {
-  flex: 1; /* the three tabs share the width equally */
-  background: transparent;
-  border-color: transparent;
-  padding: 0 12px;
-}
-
-.nav-link:hover {
-  background: var(--blue-soft);
-}
-
-.nav-link.active {
-  background: var(--blue-soft);
+.tutor-head .eyebrow {
   color: var(--blue-dark);
 }
 
-/* Wider screens: the same bar sits under the header instead */
-@media (min-width: 700px) {
+/* ---------- Phones ---------- */
+@media (max-width: 699px) {
+  .page {
+    padding-top: 20px;
+    padding-bottom: 100px; /* room so the bottom bar never covers content */
+    gap: 16px;
+  }
+
+  .page-header h1 {
+    font-size: 26px;
+  }
+
+  .header-inner {
+    min-height: 56px;
+  }
+
+  /* the same NavBar, now stuck to the bottom of the screen */
   .navbar {
-    position: static;
-    padding: 0;
-    background: transparent;
-    border-top: none;
-    margin-bottom: 24px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 10;
+    margin: 0;
+    padding-bottom: 12px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    background: var(--surface);
+    border-top: 1px solid var(--border);
   }
 
   .nav-link {
-    flex: 0 0 auto; /* back to their natural width */
+    min-height: 64px;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 12px;
+    border-bottom: none;
   }
 
-  #root {
-    padding-bottom: 40px;
+  .nav-icon {
+    display: block;
+  }
+
+  .flashcard-term {
+    font-size: 44px;
+  }
+
+  .exercise {
+    padding: 24px;
+  }
+
+  .exercise-prompt {
+    font-size: 22px;
+  }
+
+  .steps {
+    grid-template-columns: 1fr; /* one step per line */
   }
 }

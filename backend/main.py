@@ -13,13 +13,15 @@ from schemas import (
     FlashcardReviewResult,
     FlashcardReviewSubmit,
     ProgressOut,
-    TopicOut,
+    GroupOut,
 )
 import data_manager
 import ai_service
 from answer_check import normalize_answer
 
 app = FastAPI()
+
+PILE_SIZE = 10  # flashcards in a pile; topped up with new words when short
 
 # Cors middleware, to allow cross platform communication
 origins = ["http://localhost:5173"]
@@ -176,9 +178,12 @@ def get_due_flashcards(
         )
 
     cards = data_manager.get_flashcards(db, user_id, domain_id, topic=topic)
-    if not cards:
-        # flashcard pile is empty, so start the learner on a few new words
-        data_manager.introduce_new_words(db, user_id, domain_id, topic=topic)
+    if len(cards) < PILE_SIZE:
+        # top the pile up to PILE_SIZE with new words from the same topic,
+        # so leftovers from an earlier session don't leave a tiny pile
+        data_manager.introduce_new_words(
+            db, user_id, domain_id, limit=PILE_SIZE - len(cards), topic=topic
+        )
         cards = data_manager.get_flashcards(db, user_id, domain_id, topic=topic)
     return cards
 
@@ -219,6 +224,12 @@ def get_progress(user_id: int, domain_id: int, db: Session = Depends(get_db)):
     return data_manager.get_progress(db, user_id, domain_id)
 
 
-@app.get("/topics", response_model=List[TopicOut])
-def get_topics(user_id: int, domain_id: int, db: Session = Depends(get_db)):
-    return data_manager.get_topics(db, user_id, domain_id)
+@app.get("/groups", response_model=List[GroupOut])
+def get_groups(domain_id: int, db: Session = Depends(get_db)):
+    return data_manager.get_groups(db, domain_id)
+
+
+# every word in one group, for practice mode (doesn't touch the schedule)
+@app.get("/groups/{group_id}/words", response_model=List[VocabularyItemOut])
+def get_group_words(group_id: int, db: Session = Depends(get_db)):
+    return data_manager.get_group_words(db, group_id)

@@ -67,9 +67,9 @@ class ProgressOut(BaseModel):
     total_words: int
 
 
-# one row of the topic list on the Home screen
-class TopicOut(BaseModel):
-    topic: str
-    total_words: int
-    learning: int  # started, still in the flashcard pile
-    known: int  # moved on to practice
+# one entry in the list dropdown (a topic or a grammar group)
+class GroupOut(BaseModel):
+    id: int
+    name: str
+    kind: str  # "topic" or "grammar"
+    word_count: int

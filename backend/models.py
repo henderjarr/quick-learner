@@ -10,6 +10,7 @@ from sqlalchemy import (
     Text,
     Boolean,
     Float,
+    UniqueConstraint,
 )
 from sqlalchemy.orm import relationship
 from database import Base
@@ -202,3 +203,35 @@ class FlashcardReview(Base):
     # True = "Got it", False = "Still learning"
     knew_it = Column(Boolean)
     reviewed_at = Column(DateTime, default=lambda: datetime.now(timezone.utc))
+
+
+# -------------------------------------------------
+# groups: named lists of words to practise, e.g. "Food and drink" or "Conjunctions".
+# A word can be in many groups, so the links live in their own table (word_groups).
+
+
+class Group(Base):
+    """A named list of words in one domain (a topic or a grammar group)."""
+
+    __tablename__ = "groups"
+    # no two groups in the same domain share a name
+    __table_args__ = (UniqueConstraint("domain_id", "name"),)
+
+    id = Column(Integer, primary_key=True, index=True)
+    domain_id = Column(Integer, ForeignKey("domains.id"))
+    # shown in the dropdown, e.g. "Irregular verbs"
+    name = Column(String)
+    # "topic" (a real-life scene) or "grammar" (a word type or verb pattern)
+    kind = Column(String)
+
+
+class WordGroup(Base):
+    """The link table: one row = "this word is in this group"."""
+
+    __tablename__ = "word_groups"
+    # a word is in a group at most once
+    __table_args__ = (UniqueConstraint("group_id", "vocabulary_item_id"),)
+
+    id = Column(Integer, primary_key=True, index=True)
+    group_id = Column(Integer, ForeignKey("groups.id"), index=True)
+    vocabulary_item_id = Column(Integer, ForeignKey("vocabulary_items.id"), index=True)
