@@ -84,6 +84,23 @@ export async function getDueFlashcards(
   return response.json();
 }
 
+// starts 10 new words and returns them; an empty list = none left
+export async function dealMoreCards(topic?: string): Promise<Flashcard[]> {
+  const params = new URLSearchParams({
+    user_id: String(USER_ID),
+    domain_id: String(DOMAIN_ID),
+  });
+  if (topic) params.set("topic", topic);
+
+  const response = await fetch(`${API_URL}/flashcards/deal?${params}`, {
+    method: "POST",
+  });
+
+  await throwIfNotOk(response);
+
+  return response.json();
+}
+
 export async function reviewFlashcard(
   vocabularyItemId: number,
   knewIt: boolean,

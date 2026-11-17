@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FlashcardView from "./FlashcardView";
 import { formatTopic } from "../format";
-import { getDueFlashcards, reviewFlashcard } from "../api";
+import { dealMoreCards, getDueFlashcards, reviewFlashcard } from "../api";
 import type { Direction, Flashcard } from "../types";
 
 type Mode = "new" | "known";
@@ -17,6 +17,8 @@ function FlashcardScreen({ topic }: FlashcardScreenProps) {
   const [reviewCount, setReviewCount] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [dealing, setDealing] = useState(false); // true while "Deal 10 more" runs
+  const [notice, setNotice] = useState<string | null>(null); // e.g. "No new words left"
 
   // load the cards when the screen appears, and again whenever the mode changes
   useEffect(() => {
@@ -53,8 +55,29 @@ function FlashcardScreen({ topic }: FlashcardScreenProps) {
     setCards([]);
     setTotal(0);
     setError(null);
+    setNotice(null);
     setLoading(true);
     setMode(next);
+  }
+
+  async function handleDeal() {
+    setDealing(true);
+    setError(null);
+    setNotice(null);
+    try {
+      const newCards = await dealMoreCards(topic ?? undefined);
+      if (newCards.length === 0) {
+        setNotice("No new words left in this topic.");
+      } else {
+        // add to the end of the pile; total grows so the progress bar stays honest
+        setCards([...cards, ...newCards]);
+        setTotal(total + newCards.length);
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong");
+    } finally {
+      setDealing(false);
+    }
   }
 
   async function handleFlashcardAnswer(knewIt: boolean) {
@@ -165,6 +188,15 @@ function FlashcardScreen({ topic }: FlashcardScreenProps) {
               ? "These words are ready to practise in sentences. Open the Practise tab when you like."
               : "You have started every word here. Review your known words, or practise them in sentences."}
           </p>
+        </div>
+      )}
+
+      {mode === "new" && !loading && (
+        <div className="deal-row">
+          <button onClick={handleDeal} disabled={dealing}>
+            {dealing ? "Dealing…" : "Deal 10 more"}
+          </button>
+          {notice && <p className="muted small">{notice}</p>}
         </div>
       )}
 

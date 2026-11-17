@@ -183,6 +183,22 @@ def get_due_flashcards(
     return cards
 
 
+# POST, not GET: this creates new SrsCard rows
+@app.post("/flashcards/deal", response_model=List[VocabularyItemOut])
+def deal_more_flashcards(
+    user_id: int,
+    domain_id: int,
+    topic: Optional[str] = None,
+    count: int = 10,
+    db: Session = Depends(get_db),
+):
+    # start `count` new words (from the topic, if given) and return them.
+    # An empty list means no new words are left (not an error).
+    return data_manager.introduce_new_words(
+        db, user_id, domain_id, limit=count, topic=topic
+    )
+
+
 @app.post(
     "/flashcards/{vocabulary_item_id}/review", response_model=FlashcardReviewResult
 )

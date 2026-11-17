@@ -309,6 +309,13 @@ h3 {
   color: var(--blue-dark);
 }
 
+.deal-row {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centred under the card */
+  gap: 8px;
+}
+
 /* ---------- Practise ---------- */
 .exercise-prompt {
   font-family: var(--font-heading);
