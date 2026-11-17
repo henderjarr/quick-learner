@@ -28,12 +28,24 @@ async function throwIfNotOk(response: Response) {
 
 // -------------------------------
 
-export async function generateExercise(): Promise<Exercise> {
-  const response = await fetch(
-    `${API_URL}/exercises/generate?user_id=${USER_ID}&domain_id=${DOMAIN_ID}`,
-    { method: "POST" },
-  );
+// returns null when no exercise is ready (the backend sends a 404)
+export async function generateExercise(
+  excludeIds: number[] = [],
+): Promise<Exercise | null> {
+  const params = new URLSearchParams({
+    user_id: String(USER_ID),
+    domain_id: String(DOMAIN_ID),
+  });
+  // append (not set): "exclude" can appear many times in the URL
+  for (const id of excludeIds) {
+    params.append("exclude", String(id));
+  }
 
+  const response = await fetch(`${API_URL}/exercises/generate?${params}`, {
+    method: "POST",
+  });
+
+  if (response.status === 404) return null;
   await throwIfNotOk(response);
 
   return response.json();

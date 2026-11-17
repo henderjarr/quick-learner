@@ -2,6 +2,7 @@ export type Exercise = {
   id: number;
   type: string;
   prompt: string;
+  vocabulary_item_id: number; // the target word, used by Skip
 };
 
 export type AnswerResult = {

@@ -309,6 +309,94 @@ h3 {
   color: var(--blue-dark);
 }
 
+/* ---------- Practise ---------- */
+.exercise-prompt {
+  font-family: var(--font-heading);
+  font-size: 24px;
+  line-height: 1.35;
+}
+
+.exercise-form {
+  display: flex;
+  flex-wrap: wrap; /* buttons drop to a new line on narrow phones */
+  gap: 12px;
+}
+
+.exercise-input {
+  flex: 1 1 200px; /* grow to fill the row, but never narrower than 200px */
+  min-height: 48px; /* same height as the buttons */
+  padding: 0 16px;
+  font: inherit; /* inputs don't inherit the page font by default */
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.exercise-input:focus {
+  outline: 2px solid var(--blue);
+  outline-offset: 1px;
+}
+
+.exercise-input:disabled {
+  background: var(--bg);
+}
+
+.exercise-result {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 20px;
+  border-radius: var(--radius);
+  border-left: 4px solid;
+}
+
+.exercise-result.correct {
+  background: var(--blue-soft);
+  border-color: var(--blue);
+}
+
+.exercise-result.learning {
+  background: var(--orange-soft);
+  border-color: var(--orange);
+}
+
+.exercise-verdict {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.correct .exercise-verdict {
+  color: var(--blue-dark);
+}
+
+.learning .exercise-verdict {
+  color: var(--orange);
+}
+
+.tutor-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+.tutor-label {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.exercise-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 /* ---------- Header + tab bar ---------- */
 .app-header {
   display: flex;

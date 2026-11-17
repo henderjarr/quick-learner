@@ -26,7 +26,9 @@ function App() {
       <main>
         {screen === "home" && <HomeScreen onStart={startFlashcards} />}
         {screen === "flashcards" && <FlashcardScreen topic={topic} />}
-        {screen === "exercise" && <ExerciseScreen />}
+        {screen === "exercise" && (
+          <ExerciseScreen onGoToFlashcards={() => startFlashcards(null)} />
+        )}
       </main>
     </>
   );
