@@ -3,9 +3,15 @@
 # Each function follows the same 5 steps: input -> config -> messages -> API call -> parse.
 import os
 import json
-from openai import OpenAI
-from anthropic import Anthropic
 from dotenv import load_dotenv
+
+load_dotenv()  # reads OPENAI_API_KEY from backend/.env
+
+# pylint: disable=wrong-import-position
+from langfuse import observe
+from langfuse.openai import OpenAI
+from anthropic import Anthropic
+from opentelemetry.instrumentation.anthropic import AnthropicInstrumentor
 from answer_check import (
     normalize_answer,
     remove_brackets,
@@ -13,7 +19,7 @@ from answer_check import (
     find_missing_accents,
 )
 
-load_dotenv()  # reads OPENAI_API_KEY from backend/.env
+AnthropicInstrumentor().instrument()
 
 openAi_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 openAi_model = "gpt-4o-mini"
@@ -137,6 +143,7 @@ exercise_tool = {
 
 
 # AI functions ----------------------------------------------
+@observe
 def generate_exercise_from_words(domain_name, system_prompt, vocabulary_items):
     target = vocabulary_items[0]
     other_words = ", ".join(item.term for item in vocabulary_items[1:]) or "none"
@@ -173,6 +180,7 @@ def generate_exercise_from_words(domain_name, system_prompt, vocabulary_items):
     raise ValueError(f"AI could not write a valid exercise after {MAX_TRIES} tries")
 
 
+@observe
 def evaluate_answer(
     system_prompt, exercise_prompt, correct_answer, user_answer, is_correct
 ):
