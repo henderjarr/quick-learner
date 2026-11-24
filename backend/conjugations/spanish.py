@@ -1,11 +1,15 @@
-# backend/conjugation.py
+# backend/conjugations/spanish.py
 # Spanish present-tense tables, worked out in plain code (no AI).
 # Irregular verbs come from the checked file data/spanish/irregular_verbs.json;
 # regular and stem-changing verbs are computed from their conjugation_type.
+# One file per language in this folder (german.py later).
 import json
 from pathlib import Path
 
-_IRREGULAR_FILE = Path(__file__).parent / "data" / "spanish" / "irregular_verbs.json"
+# .parent = conjugations/, .parent.parent = backend/ (where data/ lives)
+_IRREGULAR_FILE = (
+    Path(__file__).parent.parent / "data" / "spanish" / "irregular_verbs.json"
+)
 _irregular_data = json.loads(_IRREGULAR_FILE.read_text(encoding="utf-8"))
 
 PERSONS = _irregular_data["persons"]  # ["yo", "tú", "él/ella/usted", ...]

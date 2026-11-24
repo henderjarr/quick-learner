@@ -38,6 +38,8 @@ uvicorn main:app --reload
 
 The API runs at http://localhost:8000. Interactive API docs (Swagger) are at http://localhost:8000/docs.
 
+Langfuse tracing is optional. Without its keys in `.env`, the backend prints one "Langfuse client … will be disabled" message at startup, which is safe to ignore.
+
 ### 2. Frontend (terminal 2)
 
 ```bash

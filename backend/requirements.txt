@@ -21,6 +21,7 @@ httpcore2==2.13.1
 httpx==0.28.1
 httpx2==2.13.1
 idna==3.20
+iniconfig==2.3.1
 ipykernel==7.4.0
 ipython==9.18.0
 ipython_pygments_lexers==1.1.1
@@ -50,6 +51,7 @@ packaging==26.3
 parso==0.8.7
 pexpect==4.9.0
 platformdirs==4.14.2
+pluggy==1.7.0
 prompt_toolkit==3.0.53
 protobuf==7.36.2
 psutil==7.2.2
@@ -58,6 +60,7 @@ pure_eval==0.2.4
 pydantic==2.13.5
 pydantic_core==2.46.5
 Pygments==2.21.0
+pytest==9.2.0
 python-dateutil==4.0.0
 python-dotenv==1.2.3
 pyzmq==27.2.0

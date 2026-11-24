@@ -1,0 +1,7 @@
+{
+  // Tell Pylint that my own Python files live in backend/,
+  // so "from answer_check import ..." in backend/tests/ is found.
+  "pylint.args": [
+    "--init-hook=import sys; sys.path.insert(0, '${workspaceFolder}/backend')"
+  ]
+}
