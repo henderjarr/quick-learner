@@ -76,111 +76,150 @@ ITEM_FIELDS = ["term", "definition", "usage_note", "example_sentence", "cefr_lev
                "part_of_speech", "article", "gender", "feminine_form",
                "conjugation_type", "topic", "teach_order", "item_type"]
 
-# 1. Create any missing tables (this never changes tables that already exist)
-Base.metadata.create_all(bind=engine)
-db = SessionLocal()
+# ===========================================================================
+# The 6 jobs, one function each. main() at the bottom runs them in order.
+# ===========================================================================
 
-# 2. Domain: create it, or update it if domain.json changed (prompts are data)
-domain_info = json.loads((DATA_DIR / "domain.json").read_text(encoding="utf-8"))
-domain = db.query(Domain).filter(Domain.name == domain_info["name"]).first()
-if domain is None:
-    domain = Domain(name=domain_info["name"])
-    db.add(domain)
-domain.domain_type = domain_info["domain_type"]
-domain.system_prompt = domain_info["system_prompt"]
-db.commit()
-db.refresh(domain)
 
-# 3. Words: find what's already in the db, keyed by (term, part_of_speech)
-#    so mañana (adverb) and mañana (noun) stay separate
-existing = {
-    (item.term, item.part_of_speech): item
-    for item in data_manager.get_vocabulary_by_domain(db, domain.id)
-}
-added = 0
-updated = 0
-extra_groups = {}  # (term, part_of_speech) -> the word's "groups" list from the JSON
+def create_tables():
+    """Job 1: create any missing tables (this never changes tables that already exist)."""
+    Base.metadata.create_all(bind=engine)
 
-for path in sorted(DATA_DIR.glob("*.json")):
-    if path.name in ("domain.json", "irregular_verbs.json"):
-        continue  # domain info and verb tables, not word lists
-    data = json.loads(path.read_text(encoding="utf-8"))
 
-    for raw_item in data["items"]:
-        # start from the file's defaults, then let the item override them
-        values = {"cefr_level": data["cefr_level"],
-                  "topic": data.get("topic"), "item_type": "word"}
-        values.update(raw_item)
+def seed_domain(db):
+    """Job 2: create the Spanish domain, or update it if domain.json changed (prompts are data).
+    Gives back the Domain row."""
+    domain_info = json.loads((DATA_DIR / "domain.json").read_text(encoding="utf-8"))
+    domain = db.query(Domain).filter(Domain.name == domain_info["name"]).first()
+    if domain is None:
+        domain = Domain(name=domain_info["name"])
+        db.add(domain)
+    domain.domain_type = domain_info["domain_type"]
+    domain.system_prompt = domain_info["system_prompt"]
+    db.commit()
+    db.refresh(domain)
+    return domain
 
-        key = (values["term"], values.get("part_of_speech"))
-        item = existing.get(key)
-        if item is None:
-            item = VocabularyItem(domain_id=domain.id)
-            db.add(item)
-            existing[key] = item
-            added += 1
-        else:
-            updated += 1
 
-        # copy every field; a field missing from the JSON becomes None (so deleting it clears it)
-        for field in ITEM_FIELDS:
-            setattr(item, field, values.get(field))
-        extra_groups[key] = values.get("groups", [])
+def seed_words(db, domain):
+    """Job 3: add new words from the JSON files and update the ones already in the db.
+    Gives back two dictionaries, both keyed by (term, part_of_speech):
+      words        -> the VocabularyItem row
+      extra_groups -> the word's "groups" list from the JSON, e.g. ["Modal verbs"]"""
+    # find what's already in the db, keyed by (term, part_of_speech)
+    # so mañana (adverb) and mañana (noun) stay separate
+    existing = {
+        (item.term, item.part_of_speech): item
+        for item in data_manager.get_vocabulary_by_domain(db, domain.id)
+    }
+    added = 0
+    updated = 0
+    extra_groups = {}
 
-db.commit()
-print(f"Domain '{domain.name}' (id {domain.id}): {added} words added, {updated} updated.")
+    for path in sorted(DATA_DIR.glob("*.json")):
+        if path.name in ("domain.json", "irregular_verbs.json"):
+            continue  # domain info and verb tables, not word lists
+        data = json.loads(path.read_text(encoding="utf-8"))
 
-# 4. Groups: work out every (kind, group name, word), then rebuild the links from scratch
-memberships = []
-for key, item in existing.items():
-    if item.topic:
-        memberships.append(("topic", topic_name(item.topic), item))
-    for name in grammar_groups_for(item, extra_groups.get(key, [])):
-        memberships.append(("grammar", name, item))
+        for raw_item in data["items"]:
+            # start from the file's defaults, then let the item override them
+            values = {"cefr_level": data["cefr_level"],
+                      "topic": data.get("topic"), "item_type": "word"}
+            values.update(raw_item)
 
-groups = {g.name: g for g in db.query(Group).filter(Group.domain_id == domain.id)}
-for kind, name, _ in memberships:
-    if name not in groups:
-        groups[name] = Group(domain_id=domain.id, name=name, kind=kind)
-        db.add(groups[name])
-db.flush()  # sends the new groups to the db so they get their ids
+            key = (values["term"], values.get("part_of_speech"))
+            item = existing.get(key)
+            if item is None:
+                item = VocabularyItem(domain_id=domain.id)
+                db.add(item)
+                existing[key] = item
+                added += 1
+            else:
+                updated += 1
 
-# old links out, fresh links in (so a word removed from a group really leaves it)
-group_ids = [g.id for g in groups.values()]
-db.query(WordGroup).filter(WordGroup.group_id.in_(group_ids)).delete(
-    synchronize_session=False
-)
-for _, name, item in memberships:
-    db.add(WordGroup(group_id=groups[name].id, vocabulary_item_id=item.id))
-db.commit()
-print(f"Groups: {len(groups)} groups, {len(memberships)} word links.")
+            # copy every field; a field missing from the JSON becomes None (so deleting it clears it)
+            for field in ITEM_FIELDS:
+                setattr(item, field, values.get(field))
+            extra_groups[key] = values.get("groups", [])
 
-# 5. Present-tense tables (conjugations/spanish.py), rebuilt from scratch every run
-item_ids = [item.id for item in existing.values()]
-db.query(Form).filter(
-    Form.vocabulary_item_id.in_(item_ids), Form.form_type == "present"
-).delete(synchronize_session=False)
-tables = 0
-for item in existing.values():
-    if item.part_of_speech != "verb" and item.item_type != "phrase":
-        continue
-    rows = spanish.present_tense(item.term, item.conjugation_type)
-    if rows:
-        for label, form in rows:
-            db.add(Form(vocabulary_item_id=item.id, form_type="present",
-                        label=label, form=form))
-        tables += 1
-db.commit()
-print(f"Conjugation: {tables} present-tense tables.")
+    db.commit()
+    print(f"Domain '{domain.name}' (id {domain.id}): {added} words added, {updated} updated.")
+    return existing, extra_groups
 
-# 6. Default learner, plus starter cards if they don't have any yet
-user = data_manager.get_or_create_default_user(db)
-card_count = db.query(SrsCard).filter(SrsCard.user_id == user.id).count()
-if card_count == 0:
-    new_words = data_manager.introduce_new_words(db, user.id, domain.id, limit=STARTER_WORDS)
-    print(f"Created {len(new_words)} starter cards for user {user.id}: "
-          + ", ".join(word.term for word in new_words))
-else:
-    print(f"User {user.id} already has {card_count} cards, none added.")
 
-db.close()
+def seed_groups(db, domain, words, extra_groups):
+    """Job 4: work out every (kind, group name, word), then rebuild the links from scratch."""
+    memberships = []
+    for key, item in words.items():
+        if item.topic:
+            memberships.append(("topic", topic_name(item.topic), item))
+        for name in grammar_groups_for(item, extra_groups.get(key, [])):
+            memberships.append(("grammar", name, item))
+
+    groups = {g.name: g for g in db.query(Group).filter(Group.domain_id == domain.id)}
+    for kind, name, _ in memberships:
+        if name not in groups:
+            groups[name] = Group(domain_id=domain.id, name=name, kind=kind)
+            db.add(groups[name])
+    db.flush()  # sends the new groups to the db so they get their ids
+
+    # old links out, fresh links in (so a word removed from a group really leaves it)
+    group_ids = [g.id for g in groups.values()]
+    db.query(WordGroup).filter(WordGroup.group_id.in_(group_ids)).delete(
+        synchronize_session=False
+    )
+    for _, name, item in memberships:
+        db.add(WordGroup(group_id=groups[name].id, vocabulary_item_id=item.id))
+    db.commit()
+    print(f"Groups: {len(groups)} groups, {len(memberships)} word links.")
+
+
+def seed_verb_tables(db, words):
+    """Job 5: present-tense tables (conjugations/spanish.py), rebuilt from scratch every run."""
+    item_ids = [item.id for item in words.values()]
+    db.query(Form).filter(
+        Form.vocabulary_item_id.in_(item_ids), Form.form_type == "present"
+    ).delete(synchronize_session=False)
+    tables = 0
+    for item in words.values():
+        if item.part_of_speech != "verb" and item.item_type != "phrase":
+            continue
+        rows = spanish.present_tense(item.term, item.conjugation_type)
+        if rows:
+            for label, form in rows:
+                db.add(Form(vocabulary_item_id=item.id, form_type="present",
+                            label=label, form=form))
+            tables += 1
+    db.commit()
+    print(f"Conjugation: {tables} present-tense tables.")
+
+
+def seed_learner(db, domain):
+    """Job 6: the default learner, plus starter cards if they don't have any yet."""
+    user = data_manager.get_or_create_default_user(db)
+    card_count = db.query(SrsCard).filter(SrsCard.user_id == user.id).count()
+    if card_count == 0:
+        new_words = data_manager.introduce_new_words(db, user.id, domain.id, limit=STARTER_WORDS)
+        print(f"Created {len(new_words)} starter cards for user {user.id}: "
+              + ", ".join(word.term for word in new_words))
+    else:
+        print(f"User {user.id} already has {card_count} cards, none added.")
+
+
+def main():
+    """Runs the 6 jobs in order. This is the table of contents for the whole file."""
+    create_tables()
+    db = SessionLocal()
+
+    domain = seed_domain(db)
+    words, extra_groups = seed_words(db, domain)
+    seed_groups(db, domain, words, extra_groups)
+    seed_verb_tables(db, words)
+    seed_learner(db, domain)
+
+    db.close()
+
+
+# only run when started with "python seed.py" (not when another file imports seed)
+if __name__ == "__main__":
+    main()
