@@ -1,17 +1,14 @@
 # backend/ai_service.py
 # Everything that talks to OpenAI lives here.
 # Each function follows the same 5 steps: input -> config -> messages -> API call -> parse.
-import os
-import json
 from dotenv import load_dotenv
 
 load_dotenv()  # reads OPENAI_API_KEY from backend/.env
 
 # pylint: disable=wrong-import-position
 from langfuse import observe
-from langfuse.openai import OpenAI
-from anthropic import Anthropic
-from opentelemetry.instrumentation.anthropic import AnthropicInstrumentor
+from langfuse.langchain import CallbackHandler
+from langchain.chat_models import init_chat_model
 from answer_check import (
     normalize_answer,
     remove_brackets,
@@ -19,12 +16,8 @@ from answer_check import (
     find_missing_accents,
 )
 
-AnthropicInstrumentor().instrument()
-
-openAi_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-openAi_model = "gpt-4o-mini"
-anthropic_client = Anthropic()
-anthropic_model = "claude-sonnet-5-5"
+OPEN_AI = "openai:gpt-5-mini"
+ANTHROPIC = "anthropic:claude-sonnet-5-5"
 
 MAX_TRIES = 3  # how many times to ask the AI again if it breaks a rule
 
@@ -32,52 +25,25 @@ MAX_TRIES = 3  # how many times to ask the AI again if it breaks a rule
 
 
 # AI helpers
-def chat(messages, system=None, tool=None, provider="openai"):
-    if provider == "anthropic":
-        params = {
-            "model": anthropic_model,
-            "max_tokens": 1000,
-            "messages": messages,
-        }
-        if system:
-            params["system"] = system
-        if tool:
-            params["tools"] = [tool]
+def chat(
+    messages,
+    system=None,
+    tool=None,
+    provider=OPEN_AI,
+):
+    """Send messages to any provider via LangChain. Returns (text, tool_input)."""
 
-        response = anthropic_client.messages.create(**params)
+    model = init_chat_model(provider, max_tokens=3000)
+    if tool:
+        model = model.bind_tools([tool])
+    if system:
+        messages = [{"role": "system", "content": system}] + messages
 
-        text = "".join(block.text for block in response.content if block.type == "text")
-        tool_input = next(
-            (block.input for block in response.content if block.type == "tool_use"),
-            None,
-        )
-        return text, tool_input
+    response = model.invoke(messages, config={"callbacks": [CallbackHandler()]})
+    text = response.text
+    tool_input = response.tool_calls[0]["args"] if response.tool_calls else None
 
-    if provider == "openai":
-        all_messages = messages
-        if system:
-            all_messages = [{"role": "system", "content": system}] + messages
-        params = {"model": openAi_model, "messages": all_messages}
-        if tool:
-            params["tools"] = [
-                {
-                    "type": "function",
-                    "function": {
-                        "name": tool["name"],
-                        "description": tool["description"],
-                        "parameters": tool["input_schema"],
-                    },
-                }
-            ]
-        response = openAi_client.chat.completions.create(**params)
-        message = response.choices[0].message
-        text = message.content or ""
-        tool_input = None
-        if message.tool_calls:
-            tool_input = json.loads(message.tool_calls[0].function.arguments)
-        return text, tool_input
-
-    raise ValueError(f"Unknown provider: {provider}")
+    return text, tool_input
 
 
 # Check helpers
